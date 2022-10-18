@@ -19,21 +19,14 @@ app.get('/ping', async (req, res) => {
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
-const start = async () => {  
-    await appDataSource.initialize()
-    .then(() => {
-      console.log("Data Source has been initialized");
-    })
-    .catch(() => {
-      console.log("Errors occurred in Data Source initializing");
-      appDataSource.destroy();
-    })
-
+const start = async () => {
   try {
-    app.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
-  } catch (err) {
-    console.error(err);
+      server.listen(PORT, ()=> console.log(`server listening on port ${PORT}`));
   }
-}
+  catch(err){
+      console.error(err);
+  }
+};
+
 
 start();
