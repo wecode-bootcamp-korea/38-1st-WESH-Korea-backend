@@ -3,10 +3,9 @@ const { catchAsync } = require('../utils/error');
 
 const signUp = catchAsync(async (req, res) => {
     try{    
-        const { username, email, password, phone }  = req.body;
-        console.log(username);
+        const { name, email, password, phone_number }  = req.body;
 
-        const insertId = await userService.signUp(username, email, password, phone);
+        const insertId = await userService.signUp(name, email, password, phone_number);
         res.status(201).json({ insertId });
     }
     catch(err){
