@@ -3,7 +3,8 @@ const http = require('http');
 
 const express = require('express');
 const morgan = require('morgan');
-const cors = require('cors');
+const cors = require('cors'); 
+const {appDataSource} = require('./api/models/moduleDao')
 
 const routes = require('./api/routes') ;
 const app = express();
@@ -20,8 +21,7 @@ app.get('/ping', async (req, res) => {
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
-const start = async () => {
-
+const start = async () => {  
     await appDataSource.initialize()
     .then(() => {
       console.log("Data Source has been initialized");
