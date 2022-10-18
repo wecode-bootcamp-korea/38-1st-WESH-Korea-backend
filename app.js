@@ -1,9 +1,9 @@
 require('dotenv').config();
-const http = require('http');
 
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors'); 
+
 const {appDataSource} = require('./api/models/moduleDao');
 
 const app = express();
@@ -16,12 +16,11 @@ app.get('/ping', async (req, res) => {
     res.status(200).json({message: '!! 연결 완료 !!'})
 })
 
-const server = http.createServer(app);
 const PORT = process.env.PORT;
 
 const start = async () => {
   try {
-      server.listen(PORT, ()=> console.log(`server listening on port ${PORT}`));
+      app.listen(PORT, ()=> console.log(`server listening on port ${PORT}`));
   }
   catch(err){
       console.error(err);
