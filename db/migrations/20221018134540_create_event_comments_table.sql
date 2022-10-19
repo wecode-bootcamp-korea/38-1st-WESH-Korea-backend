@@ -8,7 +8,7 @@ CREATE TABLE event_comments (
     updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (event_id) REFERENCES events(id)
+    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 );
 -- migrate:down
 DROP TABLE event_comments;

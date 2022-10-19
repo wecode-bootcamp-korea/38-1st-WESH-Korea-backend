@@ -4,8 +4,8 @@ CREATE TABLE product_tag (
     product_id INT NOT NULL,
     tag_id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (product_id) REFERENCES products(id),
-    FOREIGN KEY (tag_id) REFERENCES tags(id)
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 );
 -- migrate:down
 DROP TABLE product_tag;
