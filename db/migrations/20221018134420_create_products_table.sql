@@ -9,7 +9,7 @@ CREATE TABLE products (
     sub_category_id INT NOT NULL,
     event_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (sub_category_id) REFERENCES sub_categories(id),
     FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 );
