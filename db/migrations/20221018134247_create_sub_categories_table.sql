@@ -1,9 +1,8 @@
 -- migrate:up
 CREATE TABLE sub_categories (
-    id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     main_category_id INT NOT NULL,
-    PRIMARY KEY (id),
     FOREIGN KEY (main_category_id) REFERENCES main_categories(id)
 );
 -- migrate:down

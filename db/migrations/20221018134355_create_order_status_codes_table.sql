@@ -1,8 +1,7 @@
 -- migrate:up
-CREATE TABLE order_status_codes (
-    id INT NOT NULL AUTO_INCREMENT,
-    status_description VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id)
+CREATE TABLE order_statuses (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    status_description VARCHAR(50) NOT NULL
 );
 -- migrate:down
-DROP TABLE order_status_codes;
+DROP TABLE order_statuses;
