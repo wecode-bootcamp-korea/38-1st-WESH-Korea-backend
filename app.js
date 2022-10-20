@@ -4,12 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors'); 
 
-<<<<<<< HEAD
 const appDataSource = require('./api/models/appDataSource');
 const {globalErrorHandler} = require('./api/utils/error')
-=======
-const {appDataSource} = require('./api/models/appDataSource');
->>>>>>> main
 
 const routes = require('./api/routes');
 const app = express();
