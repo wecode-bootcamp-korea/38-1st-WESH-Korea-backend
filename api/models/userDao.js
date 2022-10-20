@@ -9,8 +9,8 @@ const createUser = async (name, email, password, phone_number) => {
                 password,
                 phone_number,
                 point
-        ) VALUES (?, ?, ?, ?, ${DEFAULT_POINT})
-        `, [name, email, password, phone_number]
+        ) VALUES (?, ?, ?, ?, ?)
+        `, [name, email, password, phone_number, DEFAULT_POINT]
     )
       return user.insertId
   }
