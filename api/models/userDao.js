@@ -1,18 +1,18 @@
 const {appDataSource} = require('./appDataSource')
 
 const createUser = async (name, email, password, phone_number) => {
-    const point = 500000;
-    const result = await appDataSource.query(
+    const DEFAULT_POINT = 500000;
+    const user = await appDataSource.query(
       `INSERT INTO users (
                 name, 
                 email,
                 password,
                 phone_number,
                 point
-        ) VALUES (?, ?, ?, ?, ${point})
+        ) VALUES (?, ?, ?, ?, ${DEFAULT_POINT})
         `, [name, email, password, phone_number]
     )
-      return result.insertId
+      return user.insertId
   }
  
 const getUserByEmail = async (email) => {
