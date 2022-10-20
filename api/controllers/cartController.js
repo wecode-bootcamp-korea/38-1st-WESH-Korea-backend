@@ -8,9 +8,9 @@ const cartList = async (req, res) => {
       res.status(400).json({ "message" : "KEY_ERROR" });
     }
 
-    const result = await cartService.cartList( user_id );
+    const userCartList = await cartService.cartList( user_id );
 
-    res.status(200).json({ "data" : result });
+    res.status(200).json({ "data" : userCartList });
   } catch (err) {
     console.log(err);
     return res.status(err.statusCode || 500).json({ "message" : err.message });
@@ -52,19 +52,19 @@ const cartList = async (req, res) => {
 // };
 
 const cartUpdate = async (req, res) => {
-  const { product_id } = req.body;
+  const { user_id, product_id, quantity } = req.body;
 
   try {
-    if ( !product_id ) {
-      return res.status(400).json({ "message" : "KEY_ERROR" });
+    if ( !user_id || !product_id || !quantity ) {
+      res.status(400).json({ "message" : "KEY_ERROR" });
     }
 
-    await cartService.cartUpdate( product_id );
+    await cartService.cartUpdate( user_id, product_id, quantity );
 
-    res.status(201).json({ "data" : "cartUpdate" });
+    res.status(200).json({ "data" : "cartUpdate" });
   } catch (err) {
     console.log(err);
-    return res.status(err.statusCode || 500).json({ "message" : err.message });
+    res.status(err.statusCode || 500).json({ "message" : err.message });
   }
 };
 
