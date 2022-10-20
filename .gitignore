@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/dotenv,macos,linux,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotenv,macos,linux,node
 
+### data file ###
+./datacsv
+
+
+
 ### schema ###
 schema.sql
 
@@ -195,3 +200,4 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/dotenv,macos,linux,node
+
