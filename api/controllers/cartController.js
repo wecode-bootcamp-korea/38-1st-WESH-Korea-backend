@@ -13,43 +13,43 @@ const cartList = async (req, res) => {
     res.status(200).json({ "data" : userCartList });
   } catch (err) {
     console.log(err);
+    res.status(err.statusCode || 500).json({ "message" : err.message });
+  }
+};
+
+const cartAdd = async (req, res) => {
+  const { user_id, product_id, quantity } = req.body;
+
+  try {
+    if ( !user_id || !product_id || !quantity ) {
+      return res.status(400).json({ "message" : "KEY_ERROR" });
+    }
+
+    await cartService.cartAdd( user_id, product_id, quantity );
+
+    res.status(201).json({ "data" : "cartAdd" });
+  } catch (err) {
+    console.log(err);
     return res.status(err.statusCode || 500).json({ "message" : err.message });
   }
 };
 
-// const cartAdd = async (req, res) => {
-//   try {
-//     const { user_id, product_id } = req.body;
-    
-//     if ( !user_id || !product_id ) {
-//       return res.status(400).json({ "message" : "KEY_ERROR" });
-//     }
+const cartDelete = async (req, res) => {
+  const { user_id, product_id } = req.body;
 
-//     await cartService.cartAdd( user_id, product_id );
+  try {
+    if ( !user_id || !product_id ) {
+      res.status(400).json({ "message" : "KEY_ERROR" });
+    }
 
-//     res.status(201).json({ "data" : "cartAdd" });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(err.statusCode || 500).json({ "message" : err.message });
-//   }
-// };
+    await cartService.cartDelete( user_id, product_id );
 
-// const cartDelete = async (req, res) => {
-//   try {
-//     const { user_id, product_id } = req.body;
-    
-//     if ( !user_id || !product_id ) {
-//       return res.status(400).json({ "message" : "KEY_ERROR" });
-//     }
-
-//     await cartService.cartAdd( user_id, product_id );
-
-//     res.status(201).json({ "data" : "cartAdd" });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(err.statusCode || 500).json({ "message" : err.message });
-//   }
-// };
+    res.status(200).json({ "data" : "cartDelete" });
+  } catch (err) {
+    console.log(err);
+    res.status(err.statusCode || 500).json({ "message" : err.message });
+  }
+};
 
 const cartUpdate = async (req, res) => {
   const { user_id, product_id, quantity } = req.body;
@@ -70,7 +70,7 @@ const cartUpdate = async (req, res) => {
 
 module.exports = { 
   cartList,
-  // cartAdd,
-  // cartDelete,
+  cartAdd,
+  cartDelete,
   cartUpdate
 };
