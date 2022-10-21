@@ -35,7 +35,7 @@ const getUserById = async (id) => {
       id,
       name,
       email,
-      password,
+      password
     FROM users
     WHERE id=?
     `, [id]
