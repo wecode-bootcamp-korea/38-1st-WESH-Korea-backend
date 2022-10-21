@@ -49,7 +49,13 @@ const cartAdd = async ( user_id, product_id, quantity ) => {
       throw err;
   } else {
     const oldQuantity = cartListCheck[0]['quantity'];
-    await cartDao.cartUpdate( user_id, product_id, oldQuantity+1 );
+    if ( oldQuantity+1 > 20 ) {
+      const err = new Error('CART_CAN_NOT_MORE_QUANTITY');
+      err.statusCode = 400;
+      throw err;
+    } else {
+      await cartDao.cartUpdate( user_id, product_id, oldQuantity+1 );
+    }
   }
 };
 
