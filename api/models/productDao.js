@@ -30,7 +30,7 @@ const getCategoryInfo = async (categoryId, offset, limit) => {
       : [Number(limit), Number(offset)];
 
     const product = await appDataSource.query(query, queryParameters);
-
+console.log(product);
     for (let i = 0; i < product.length; i++) {
       const productId = product[i].id;
       const categoryId = product[i].category;
@@ -63,8 +63,5 @@ const getCategoryInfo = async (categoryId, offset, limit) => {
     throw err;
   }
 };
-
-// - product 이름, 이미지, 태그, 가격
-// - product 총 갯수& 각 카테고리별 product 갯수
 
 module.exports = { getCategoryInfo };

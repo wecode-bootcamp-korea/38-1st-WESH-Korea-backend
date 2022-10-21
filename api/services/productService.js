@@ -1,13 +1,13 @@
-const categoryDao=require("../models/categoryDao");
+const productDao=require("../models/productDao");
 
 const divideCategory=async(categoryId, offset, limit, ordering)=>{
    try{ 
     switch(categoryId){
         case "oil":
-            categoryId=1;
+            categoryId=2;
             break;
         case "perfume":
-            categoryId=2;
+            categoryId=1;
             break;
         case "lotion":
             categoryId=3;
@@ -33,7 +33,7 @@ const divideCategory=async(categoryId, offset, limit, ordering)=>{
             ordering="price"
     }
     
-    return categoryDao.getCategoryInfo(categoryId, offset, limit);
+    return productDao.getCategoryInfo(categoryId, offset, limit);
     } catch (err){
         throw err;
     }
