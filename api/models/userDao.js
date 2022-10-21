@@ -30,12 +30,12 @@ const getUserByEmail = async (email) => {
 }
   
 const getUserById = async (id) => {
-  const result = await dataSource.query(
+  const result = await appDataSource.query(
     `SELECT 
       id,
       name,
       email,
-      password,
+      password
     FROM users
     WHERE id=?
     `, [id]
