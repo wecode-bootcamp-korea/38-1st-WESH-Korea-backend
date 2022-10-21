@@ -15,3 +15,13 @@ CREATE TABLE products (
 );
 -- migrate:down
 DROP TABLE products;
+
+
+
+   SELECT 
+        id,
+        name,
+        price,
+        thumbnail
+      FROM products p
+      WHERE sub_category_id=3
