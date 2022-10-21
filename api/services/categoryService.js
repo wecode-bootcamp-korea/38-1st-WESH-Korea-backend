@@ -32,7 +32,8 @@ const divideCategory=async(categoryId, offset, limit, ordering)=>{
         default : 
             ordering="price"
     }
-    return categoryId?categoryDao.getCategoryInfo(categoryId, offset, limit, ordering):categoryDao.getCategoryInfoAll(offset, limit,ordering);
+    
+    return categoryDao.getCategoryInfo(categoryId, offset, limit);
     } catch (err){
         throw err;
     }
