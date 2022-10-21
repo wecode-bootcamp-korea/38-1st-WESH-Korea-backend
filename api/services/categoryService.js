@@ -3,14 +3,14 @@ const categoryDao=require("../models/categoryDao");
 const divideCategory=async(categoryId, offset, limit, ordering)=>{
    try{ 
     switch(categoryId){
-        case "lotion":
-            categoryId=3;
-            break;
         case "oil":
             categoryId=1;
             break;
         case "perfume":
             categoryId=2;
+            break;
+        case "lotion":
+            categoryId=3;
             break;
         case "soap":
             categoryId=4;
