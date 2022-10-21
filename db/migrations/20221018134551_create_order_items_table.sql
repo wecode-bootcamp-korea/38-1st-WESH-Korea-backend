@@ -6,7 +6,7 @@ CREATE TABLE order_items (
     product_id INT NOT NULL,
     order_id INT NOT NULL,
     order_item_status_id INT NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES order_items(id),
+    FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (order_item_status_id) REFERENCES order_item_statuses(id)
 );
