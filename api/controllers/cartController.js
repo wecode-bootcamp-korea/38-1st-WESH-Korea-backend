@@ -1,8 +1,8 @@
 const cartService = require("../services/cartService");
 
 const cartList = async (req, res) => {
-  const { user_id } = req.body;
-
+  const user_id = req.user.id;
+  
   try {
     if ( !user_id ) {
       res.status(400).json({ "message" : "KEY_ERROR" });
@@ -18,10 +18,11 @@ const cartList = async (req, res) => {
 };
 
 const cartAdd = async (req, res) => {
-  const { user_id, product_id, quantity } = req.body;
+  const { product_id, quantity } = req.body;
+  const user_id = req.user.id;
 
   try {
-    if ( !user_id || !product_id || !quantity ) {
+    if ( !product_id || !quantity ) {
       return res.status(400).json({ "message" : "KEY_ERROR" });
     }
 
@@ -35,10 +36,11 @@ const cartAdd = async (req, res) => {
 };
 
 const cartDelete = async (req, res) => {
-  const { user_id, product_id } = req.body;
+  const { product_id } = req.body;
+  const user_id = req.user.id;
 
   try {
-    if ( !user_id || !product_id ) {
+    if ( !product_id ) {
       res.status(400).json({ "message" : "KEY_ERROR" });
     }
 
@@ -52,10 +54,11 @@ const cartDelete = async (req, res) => {
 };
 
 const cartUpdate = async (req, res) => {
-  const { user_id, product_id, quantity } = req.body;
+  const { product_id, quantity } = req.body;
+  const user_id = req.user.id;
 
   try {
-    if ( !user_id || !product_id || !quantity ) {
+    if ( !product_id || !quantity ) {
       res.status(400).json({ "message" : "KEY_ERROR" });
     }
 

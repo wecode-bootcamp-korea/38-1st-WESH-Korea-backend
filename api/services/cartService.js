@@ -1,9 +1,7 @@
 const cartDao = require("../models/cartDao");
 
 const cartList = async ( user_id ) => {
-  const cartList = await cartDao.cartList( user_id );
-
-  return cartList;
+  return  await cartDao.cartList( user_id );
 };
 
 const cartUpdate = async ( user_id, product_id, quantity ) => {
