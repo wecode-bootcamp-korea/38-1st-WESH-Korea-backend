@@ -3,10 +3,11 @@ const { appDataSource } = require("./appDataSource");
 const cartList = async ( user_id ) => {
 	return await appDataSource.query(`
 		SELECT 
+      products.id AS product_id,
 			name AS product_name,
 			quantity AS product_quantity,
 			price AS product_price,
-			thumbnail AS product_thumbnail,
+			thumbnail AS product_img,
       user_id
 		FROM carts
     INNER JOIN products
