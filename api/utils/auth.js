@@ -17,9 +17,9 @@ const loginRequired = async (req, res, next) => {
 		const error = new Error('USER_DOES_NOT_EXIST')		
 		return res.status(404).json({message: error.message})
 	}
-
+	
   req.user = user;
   next();
 }
 
-module.exports = { loginRequired }
+module.exports = loginRequired ;
