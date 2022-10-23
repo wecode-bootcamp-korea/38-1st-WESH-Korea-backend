@@ -48,10 +48,6 @@ const orderAdd = async ( user_id, product_info, total_price ) => {
     }
 
     await orderDao.orderItemAdd( product_id, product_price, product_quantity, order_id );
-    
-    // if ( cartCheck && cartCheck.length !== 0 ) {
-    //   await cartDao.cartDelete( user_id, product_id );
-    // }
   }
 
   // const user_point = await userDao.getPointById( user_id );
