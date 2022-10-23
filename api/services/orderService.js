@@ -1,7 +1,8 @@
 const orderDao = require("../models/orderDao");
 // const cartDao = require("../models/cartDao");
+// const userDao = require("../models/userDao");
 
-const orderAdd = async ( user_id, product_info ) => {
+const orderAdd = async ( user_id, product_info, total_price ) => {
 
   if ( !product_info || !product_info.length === 0 ) {
     const err = new Error('ORDER_PRODUCT_IS_NOT_VALID');
@@ -52,6 +53,8 @@ const orderAdd = async ( user_id, product_info ) => {
     //   await cartDao.cartDelete( user_id, product_id );
     // }
   }
+
+    // await userDao.updatePoint( user_id, point, total_price );
 };
 
 module.exports = { 

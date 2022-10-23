@@ -2,14 +2,14 @@ const orderService = require("../services/orderService");
 
 const orderAdd = async (req, res) => {
   const user_id = req.user.id;
-  const { product_info } = req.body;
+  const { product_info, total_price } = req.body;
 
   try {
-    if ( !product_info ) {
+    if ( !product_info, !total_price ) {
       res.status(400).json({ "message" : "KEY_ERROR" });
     }
 
-    await orderService.orderAdd( user_id, product_info );
+    await orderService.orderAdd( user_id, product_info, total_price );
 
     res.status(200).json({ "data" : "orderComplete" });
   } catch (err) {
