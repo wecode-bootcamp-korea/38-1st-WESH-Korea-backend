@@ -13,25 +13,31 @@ const cateId= await appDataSource.query(`
 return cateId[0].id;
 }
 
-
-const getProductList= async(cateId, limit, offset, ordering)=>{
-    const input = [ordering, limit, offset];
+const getSELLCount = async () =>{
+    return appDataSource.query(`
+        SELECT
+            COUNT(*) AS count
+        FROM user_product;
+    `)
+}
+const getProductList= async(cateId, limit, offset, order)=>{
+    const input = [order, limit, offset];
     let queryByCategory;
     if(!cateId){
         queryByCategory =
         `SELECT
-            p.id,
-            p.name AS title,
-            p.price,
-            thumbnail AS img,
-            sc.name AS category
-        FROM products p
-        JOIN sub_categories sc ON p.sub_category_id = sc.id
-        LEFT JOIN reviews r ON r.product_id = p.id
-        LEFT JOIN user_product up ON up.product_id = p.id
-        GROUP BY p.id
-        ORDER BY ?
-        LIMIT ? OFFSET ?;`;
+        p.id,
+        p.name AS title,
+        p.price,
+        thumbnail AS img,
+        sc.name AS category
+    FROM products p
+    JOIN sub_categories sc ON p.sub_category_id = sc.id
+    LEFT JOIN reviews r ON r.product_id = p.id
+    LEFT JOIN user_product up ON up.product_id = p.id
+    GROUP BY p.id
+    ORDER BY ?
+    LIMIT ? OFFSET ?;`;
     } else {
         input.unshift(cateId);
         queryByCategory =
@@ -69,5 +75,7 @@ const getTagsByProduct = async (productId) =>{
 module.exports = {
     getCategoryId,
     getProductList,
-    getTagsByProduct
+    getTagsByProduct,
+    getSELLCount
+
 }
