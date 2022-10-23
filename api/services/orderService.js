@@ -54,14 +54,17 @@ const orderAdd = async ( user_id, product_info, total_price ) => {
     // }
   }
 
-  const user_point = await userDao.getPointById( user_id );
+  // const user_point = await userDao.getPointById( user_id );
 
-  if ( user_point < total_price ) {
-    const err = new Error('POINT_IS_NOT_ENOUGH');
-    err.statusCode = 400;
-    throw err;
-  }
-  await userDao.updatePoint( user_id, point, total_price );
+  // if ( user_point < total_price ) {
+  //   const err = new Error('POINT_IS_NOT_ENOUGH');
+  //   err.statusCode = 400;
+  //   throw err;
+  // }
+
+  // const update_point = user_point - total_price;
+
+  // await userDao.updatePoint( user_id, update_point );
 };
 
 module.exports = { 
