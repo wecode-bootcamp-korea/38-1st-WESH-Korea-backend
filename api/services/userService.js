@@ -89,13 +89,13 @@ const signIn = async (email, password) => {
 
 }
 
-const getMyPage = async(userId)=>{
-	return userDao.getMyPage(userId);
+const getUserDetail = async(userId)=>{
+	return userDao.getUserDetail(userId);
 }
 
 module.exports = { 
 	signUp, 
 	signIn,
 	getUserById,
-	getMyPage
+	getUserDetail
 }

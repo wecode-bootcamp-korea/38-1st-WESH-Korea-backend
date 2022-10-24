@@ -46,7 +46,7 @@ const getUserById = async (id) => {
   return result[0];
 };
 
-const getMyPage = async (userId) => {
+const getUserDetail = async (userId) => {
   const result = await appDataSource.query(
     `
     SELECT 
@@ -72,5 +72,5 @@ module.exports = {
   createUser,
   getUserByEmail,
   getUserById,
-  getMyPage,
+  getUserDetail
 };
