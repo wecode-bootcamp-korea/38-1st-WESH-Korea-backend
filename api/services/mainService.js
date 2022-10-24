@@ -1,10 +1,10 @@
 const mainDao = require('../models/mainDao');
 
-const mainPage = async () => {
-    const result = await mainDao.mainPage();
+const mainDetailProducts = async (limit, offset) => {
+    const result = await mainDao.mainDetailProducts(limit, offset);
     return result;
 }
 
 module.exports = {
-    mainPage
+    mainDetailProducts
 }

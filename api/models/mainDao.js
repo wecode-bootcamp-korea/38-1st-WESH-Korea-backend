@@ -1,8 +1,8 @@
 const {appDataSource} = require('./appDataSource')
 
-const mainPage = async () => {
+const mainDetailProducts = async (limit, offset) => {
     try{
-        const eventImgs = await appDataSource.query(
+        const eventImages = await appDataSource.query(
             `SELECT
                 events.image_url AS img
             FROM events
@@ -19,11 +19,11 @@ const mainPage = async () => {
             ON products.id = user_product.product_id
             GROUP BY product_id 
             ORDER BY count(*) DESC
-            LIMIT 5 OFFSET 0
-            `
+            LIMIT ? OFFSET ?
+            `, [+limit, +offset]
         )
         return {
-            eventImgs: eventImgs,
+            eventImages: eventImages,
             bestProducts: bestProducts
         }
     }
@@ -35,5 +35,5 @@ const mainPage = async () => {
 }
 
 module.exports = {
-    mainPage
+    mainDetailProducts
 }
