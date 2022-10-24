@@ -7,8 +7,6 @@ const getProductList = async (categoryName, limit, offset, sort) => {
         limit = Number(limit);
         offset = Number(offset);
 
-        const countBySelling = await productDao.getSELLCount();
-
         let productlist;
         switch(sort){
             case "high" :
@@ -26,8 +24,7 @@ const getProductList = async (categoryName, limit, offset, sort) => {
                 break;
                 
             default :
-                order = `AVG(r.score) + COUNT(up.product_id) / (${Number(await countBySelling[0].count)}) * 5 DESC`;
-                productlist=await productDao.getProductListByReview(cateId, limit, offset, order);
+                productlist=await productDao.getProductListByHowManySelled(cateId, limit, offset);
                 break;
         }
 
