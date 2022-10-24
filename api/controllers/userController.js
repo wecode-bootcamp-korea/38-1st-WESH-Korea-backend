@@ -1,6 +1,7 @@
 const userService = require('../services/userService');
+const { catchAsync } = require('../utils/error');
 
-const signUp = async (req, res) => {
+const signUp = catchAsync(async (req, res) => {
     try{    
         const { name, email, password, phone_number }  = req.body;
 
@@ -10,7 +11,7 @@ const signUp = async (req, res) => {
     catch(err){
         console.log(err);
     }
-}
+})
 
 const signIn = async (req, res) => {
     const { email, password } = req.body;
@@ -24,20 +25,7 @@ const signIn = async (req, res) => {
     }
 }
 
-const getUserInfo = async (req, res) => {
-  const { user } = req.body;
-
-  try {
-    const data = await userService.getUserInfo(user);
-    res.status(200).json({ message: "MYPAGE_LOADING_SUCCESS", data: data });
-
-  } catch (error) {
-    res.status(error.statusCode || 400).json({ message: error.message });
-  }
-};
-
 module.exports = {
     signUp,
-    signIn,
-    getUserInfo
+    signIn
 }

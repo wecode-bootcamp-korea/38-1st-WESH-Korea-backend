@@ -89,16 +89,8 @@ const signIn = async (email, password) => {
 
 }
 
-const getUserInfo = async(userId) => {
-
-
-	return userDao.getUserInfo();
-}
-
-
 module.exports = { 
 	signUp, 
 	signIn,
-	getUserById,
-	getUserInfo
+	getUserById
 }
