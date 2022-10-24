@@ -22,17 +22,15 @@ const getProductList = async (categoryName, limit, offset, sort) => {
                 break;
 
             case "review" :
-                order = `COUNT(*)`;
                 productlist=await productDao.getProductListByReview(cateId, limit, offset);
                 break;
                 
-                default :
+            default :
                 order = `AVG(r.score) + COUNT(up.product_id) / (${Number(await countBySelling[0].count)}) * 5 DESC`;
-                productlist=await productDao.getBestProduct(cateId, limit, offset, order);
+                productlist=await productDao.getProductListByReview(cateId, limit, offset, order);
                 break;
         }
 
-        await productDao.getProductList( cateId, limit, offset, order);
 
         for(let i=0; i<productlist.length; i++){
             const tagArr = [];

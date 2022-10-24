@@ -23,31 +23,38 @@ const getSELLCount = async () =>{
 const getProductList= async(cateId, limit, offset, order)=>{
 const input = [ limit, offset];
 let query = !cateId ? `
-    SELECT 
-        p.id, 
-        p.name AS title, 
-        p.price, 
-        thumbnail AS img, 
-        sc.name AS category 
-    FROM products p 
-    JOIN sub_categories sc ON p.sub_category_id = sc.id 
-    ORDER BY ${order}
-    LIMIT ? OFFSET ? ;
+SELECT 
+    p.id, 
+    p.name AS title, 
+    p.price, 
+    thumbnail AS img, 
+    sc.name AS category
+FROM products p 
+JOIN sub_categories sc ON p.sub_category_id = sc.id
+LEFT JOIN reviews r ON r.product_id = p.id 
+GROUP BY p.id
+ORDER BY ${order}
+LIMIT ? OFFSET ? ;
     ` : `
-    SELECT 
-        p.id, 
-        p.name AS title, 
-        p.price, 
-        thumbnail AS img, 
-        sc.name AS category 
-    FROM products p 
-    JOIN sub_categories sc ON p.sub_category_id = sc.id 
-    WHERE p.sub_category_id = 3
-    ORDER BY ${order}
-    LIMIT 16 OFFSET 0 ;` 
-    if(cateId) input.unshift(cateId);
-    let sol = await appDataSource.query(query, input);
-    return sol;
+SELECT 
+	p.id, 
+	p.name AS title, 
+	p.price, 
+	thumbnail AS img, 
+	sc.name AS category
+FROM products p 
+JOIN sub_categories sc ON p.sub_category_id = sc.id
+LEFT JOIN reviews r ON r.product_id = p.id 
+WHERE sub_category_id = ?
+GROUP BY p.id 
+ORDER BY ${order}
+LIMIT ? OFFSET ?;
+`
+
+if(cateId) input.unshift(cateId);
+
+let sol = await appDataSource.query(query, input);
+return sol;
 }
 //sql injection
 const getProductListByReview= async(cateId, limit, offset)=>{
@@ -63,7 +70,6 @@ SELECT
 FROM products p 
 JOIN sub_categories sc ON p.sub_category_id = sc.id
 LEFT JOIN reviews r ON r.product_id = p.id 
-WHERE sub_category_id = ?
 GROUP BY p.id 
 ORDER BY COUNT(r.product_id) DESC
 LIMIT ? OFFSET ? ;
