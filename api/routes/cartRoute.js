@@ -3,9 +3,9 @@ const { loginRequired } = require("../utils/auth");
 
 const userController = require("../controllers/cartController");
 
-router.get("/", loginRequired, userController.cartList);
-router.post("/", loginRequired, userController.cartAdd);
-router.delete("/", loginRequired, userController.cartDelete);
-router.patch("/", loginRequired, userController.cartUpdate);
+router.get("/", loginRequired, userController.getAllCartList);
+router.post("/", loginRequired, userController.addProductInCartList);
+router.delete("/", loginRequired, userController.deleteProductInCartList);
+router.patch("/", loginRequired, userController.updateOptionInCartList);
 
 module.exports = { router };

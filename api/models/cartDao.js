@@ -1,23 +1,23 @@
 const { appDataSource } = require("./appDataSource");
 
-const cartList = async ( user_id ) => {
+const getAllCartList = async ( user_id ) => {
 	return await appDataSource.query(`
-		SELECT 
+    SELECT 
       products.id AS product_id,
-			name AS product_name,
-			quantity AS product_quantity,
-			price AS product_price,
-			thumbnail AS product_img,
+      name AS product_name,
+      quantity AS product_quantity,
+      price AS product_price,
+      thumbnail AS product_img,
       user_id
-		FROM carts
+    FROM carts
     INNER JOIN products
     ON carts.product_id = products.id
-		WHERE user_id = ?;`,
+    WHERE user_id = ?;`,
     [ user_id ]
 	);
 }
 
-const cartAdd = async ( user_id, product_id, quantity ) => {
+const addProductInCartList = async ( user_id, product_id, quantity ) => {
 	return await appDataSource.query(`
     INSERT INTO carts
     (
@@ -30,7 +30,7 @@ const cartAdd = async ( user_id, product_id, quantity ) => {
 	);
 }
 
-const cartUpdate = async ( user_id, product_id, quantity ) => {
+const updateOptionInCartList = async ( user_id, product_id, quantity ) => {
 	await appDataSource.query(`
     UPDATE carts
     SET quantity = ?
@@ -40,7 +40,7 @@ const cartUpdate = async ( user_id, product_id, quantity ) => {
 	);
 }
 
-const cartDelete = async ( user_id, product_id ) => {
+const deleteProductInCartList = async ( user_id, product_id ) => {
 	await appDataSource.query(`
     DELETE
     FROM carts
@@ -68,9 +68,9 @@ const cartListCheck = async ( user_id, product_id ) => {
 }
 
 module.exports = { 
-  cartList,
+  getAllCartList,
   cartListCheck,
-  cartAdd,
-  cartDelete,
-  cartUpdate
+  addProductInCartList,
+  deleteProductInCartList,
+  updateOptionInCartList
 };

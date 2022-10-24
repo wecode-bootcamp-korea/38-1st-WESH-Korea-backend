@@ -1,17 +1,10 @@
 const cartDao = require("../models/cartDao");
 
-const cartList = async ( user_id ) => {
-  return  await cartDao.cartList( user_id );
+const getAllCartList = async ( user_id ) => {
+  return  await cartDao.getAllCartList( user_id );
 };
 
-const cartUpdate = async ( user_id, product_id, quantity ) => {
-  quantity = +quantity;
-
-  if ( isNaN(quantity) ) {
-    const err = new Error('CART_QUANTITY_IS_NOT_NUMBER');
-    err.statusCode = 400;
-    throw err;
-  }
+const updateOptionInCartList = async ( user_id, product_id, quantity ) => {
 
   if ( quantity<0 || quantity>20 ) {
     const err = new Error('CART_QUANTITY_IS_NOT_VALID');
@@ -19,10 +12,10 @@ const cartUpdate = async ( user_id, product_id, quantity ) => {
     throw err;
   }
 
-  await cartDao.cartUpdate( user_id, product_id, quantity );
+  await cartDao.updateOptionInCartList( user_id, product_id, quantity );
 };
 
-const cartAdd = async ( user_id, product_id, quantity ) => {
+const addProductInCartList = async ( user_id, product_id, quantity ) => {
   quantity = +quantity;
 
   if ( isNaN(quantity) ) {
@@ -40,7 +33,7 @@ const cartAdd = async ( user_id, product_id, quantity ) => {
   const cartListCheck = await cartDao.cartListCheck( user_id, product_id );
 
   if ( !cartListCheck || cartListCheck.length === 0 ) {
-    await cartDao.cartAdd( user_id, product_id, quantity );
+    await cartDao.addProductInCartList( user_id, product_id, quantity );
   } else if ( cartListCheck.length > 1 ) {
       const err = new Error('CART_CHECK_LIST_OVERLAP');
       err.statusCode = 500;
@@ -52,12 +45,12 @@ const cartAdd = async ( user_id, product_id, quantity ) => {
       err.statusCode = 400;
       throw err;
     } else {
-      await cartDao.cartUpdate( user_id, product_id, oldQuantity+1 );
+      await cartDao.updateOptionInCartList( user_id, product_id, oldQuantity+1 );
     }
   }
 };
 
-const cartDelete = async ( user_id, product_id ) => {
+const deleteProductInCartList = async ( user_id, product_id ) => {
   const cartListCheck = await cartDao.cartListCheck( user_id, product_id );
   
   if ( !cartListCheck || cartListCheck.length === 0 ) {
@@ -66,12 +59,12 @@ const cartDelete = async ( user_id, product_id ) => {
     throw err;
   }
 
-  await cartDao.cartDelete( user_id, product_id );
+  await cartDao.deleteProductInCartList( user_id, product_id );
 };
 
 module.exports = { 
-  cartList,
-  cartAdd,
-  cartUpdate,
-  cartDelete
+  getAllCartList,
+  addProductInCartList,
+  updateOptionInCartList,
+  deleteProductInCartList
 };

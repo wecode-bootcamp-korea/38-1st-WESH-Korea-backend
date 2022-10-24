@@ -1,79 +1,76 @@
 const cartService = require("../services/cartService");
+const { catchAsync } = require("../utils/error");
 
-const cartList = async (req, res) => {
+const getAllCartList = catchAsync(async (req, res) => {
   const user_id = req.user.id;
-  
-  try {
-    if ( !user_id ) {
-      res.status(400).json({ "message" : "KEY_ERROR" });
-    }
 
-    const userCartList = await cartService.cartList( user_id );
-
-    res.status(200).json({ "data" : userCartList });
-  } catch (err) {
-    console.log(err);
-    res.status(err.statusCode || 500).json({ "message" : err.message });
+  if ( !user_id ) {
+    const err = new Error("KEY_ERROR");
+    err.statusCode = 400;
+    throw err;
   }
-};
 
-const cartAdd = async (req, res) => {
+  const userCartList = await cartService.getAllCartList( user_id );
+
+  res.status(200).json({ "data" : userCartList });
+});
+
+const addProductInCartList = catchAsync(async (req, res) => {
   const { product_id, quantity } = req.body;
   const user_id = req.user.id;
 
-  try {
-    if ( !product_id || !quantity ) {
-      return res.status(400).json({ "message" : "KEY_ERROR" });
-    }
-
-    await cartService.cartAdd( user_id, product_id, quantity );
-
-    res.status(201).json({ "data" : "cartAdd" });
-  } catch (err) {
-    console.log(err);
-    return res.status(err.statusCode || 500).json({ "message" : err.message });
+  if ( !product_id || !quantity ) {
+    const err = new Error("KEY_ERROR");
+    err.statusCode = 400;
+    throw err;
   }
-};
 
-const cartDelete = async (req, res) => {
+  await cartService.addProductInCartList( user_id, product_id, quantity );
+
+  res.status(201).json({ "data" : "addProductInCartList" });
+});
+
+const deleteProductInCartList = catchAsync(async (req, res) => {
   const { product_id } = req.body;
   const user_id = req.user.id;
 
-  try {
-    if ( !product_id ) {
-      res.status(400).json({ "message" : "KEY_ERROR" });
-    }
-
-    await cartService.cartDelete( user_id, product_id );
-
-    res.status(200).json({ "data" : "cartDelete" });
-  } catch (err) {
-    console.log(err);
-    res.status(err.statusCode || 500).json({ "message" : err.message });
+  if ( !product_id ) {
+    const err = new Error("KEY_ERROR");
+    err.statusCode = 400;
+    throw err;
   }
-};
 
-const cartUpdate = async (req, res) => {
+  await cartService.deleteProductInCartList( user_id, product_id );
+
+  res.status(200).json({ "data" : "deleteProductInCartList" });
+});
+
+const updateOptionInCartList = catchAsync(async (req, res) => {
   const { product_id, quantity } = req.body;
   const user_id = req.user.id;
-
-  try {
-    if ( !product_id || !quantity ) {
-      res.status(400).json({ "message" : "KEY_ERROR" });
-    }
-
-    await cartService.cartUpdate( user_id, product_id, quantity );
-
-    res.status(200).json({ "data" : "cartUpdate" });
-  } catch (err) {
-    console.log(err);
-    res.status(err.statusCode || 500).json({ "message" : err.message });
+  
+  if ( !product_id || !quantity ) {
+    const err = new Error("KEY_ERROR");
+    err.statusCode = 400;
+    throw err;
   }
-};
+    
+  if ( isNaN(quantity) ) {
+    const err = new Error("CART_QUANTITY_IS_NOT_NUMBER");
+    err.statusCode = 400;
+    throw err;
+  }
+  
+  const NumberQuantity = +quantity;
+
+  await cartService.updateOptionInCartList( user_id, product_id, NumberQuantity );
+
+  res.status(200).json({ "data" : "updateOptionInCartList" });
+});
 
 module.exports = { 
-  cartList,
-  cartAdd,
-  cartDelete,
-  cartUpdate
+  getAllCartList,
+  addProductInCartList,
+  deleteProductInCartList,
+  updateOptionInCartList
 };
