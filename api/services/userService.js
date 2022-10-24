@@ -89,8 +89,13 @@ const signIn = async (email, password) => {
 
 }
 
+const getMyPage = async(userId)=>{
+	return userDao.getMyPage(userId);
+}
+
 module.exports = { 
 	signUp, 
 	signIn,
-	getUserById
+	getUserById,
+	getMyPage
 }
