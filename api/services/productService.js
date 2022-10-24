@@ -1,25 +1,29 @@
 const productDao = require('../models/productDao');
 
-const getProductList = async (categoryName, limit, offset, ordering) => {
+const getProductList = async (categoryName, limit, offset, sort) => {
     try{
         const cateId =(categoryName !== "all")? await productDao.getCategoryId(categoryName) : 0;
+        console.log(cateId);
         let order;
         limit = Number(limit);
         offset = Number(offset);
         const countBySelling = await productDao.getSELLCount();
 
-        switch(ordering){
-            case "높은가격순" :
+        switch(sort){
+            case "high" :
                 order = `price DESC`;
                 break;
-            case "낮은가격순" :
+            case "low" :
                 order = `price ASC`;
                 break;
-            case "리뷰많은순" :
-                order = `COUNT(r.id) DESC`;
+            case "review" :
+                order = `LEFT JOIN reviews r ON r.product_id = p.id
+                WHERE sub_category_id = ?
+                GROUP BY p.id
+                ORDER BY COUNT(r.review)`;
                 break;
             default :
-                order = `AVRG(r.score) + COUNT(up.product_id) / ${Number(await countBySelling[0].count)} * 5 DESC`;
+                order = `AVG(r.score) + COUNT(up.product_id) / (${Number(await countBySelling[0].count)}) * 5 DESC`;
                 break;
         }
 

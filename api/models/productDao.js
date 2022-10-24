@@ -33,10 +33,7 @@ const getProductList= async(cateId, limit, offset, order)=>{
         sc.name AS category
     FROM products p
     JOIN sub_categories sc ON p.sub_category_id = sc.id
-    LEFT JOIN reviews r ON r.product_id = p.id
-    LEFT JOIN user_product up ON up.product_id = p.id
-    GROUP BY p.id
-    ORDER BY ?
+    ?
     LIMIT ? OFFSET ?;`;
     } else {
         input.unshift(cateId);
@@ -46,7 +43,8 @@ const getProductList= async(cateId, limit, offset, order)=>{
             p.name AS title,
             p.price,
             thumbnail AS img,
-            sc.name AS category
+            sc.name AS category,
+            COUNT(r.content)
         FROM products p
         JOIN sub_categories sc ON p.sub_category_id = sc.id
         LEFT JOIN reviews r ON r.product_id = p.id
@@ -77,5 +75,6 @@ module.exports = {
     getProductList,
     getTagsByProduct,
     getSELLCount
-
 }
+
+

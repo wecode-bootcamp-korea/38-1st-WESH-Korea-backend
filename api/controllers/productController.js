@@ -2,7 +2,7 @@ const productService = require('../services/productService');
 
 const getProductList = async (req, res) => {
   const { categoryName } = req.params;
-  const { limit, offset, ordering } = req.query;
+  const { limit, offset, sort } = req.query;
 
   try {
     if ( !categoryName || !limit || !offset ) {
@@ -14,7 +14,7 @@ const getProductList = async (req, res) => {
         categoryName,
         limit,
         offset,
-        ordering
+        sort
       )
 
     return res.status(200).json({ 
