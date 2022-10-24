@@ -50,16 +50,41 @@ const addProductInCartList = async ( user_id, product_id, quantity ) => {
   }
 };
 
-const deleteProductInCartList = async ( user_id, product_id ) => {
-  const cartListCheck = await cartDao.cartListCheck( user_id, product_id );
-  
-  if ( !cartListCheck || cartListCheck.length === 0 ) {
+const deleteProductInCartList = async ( user_id, product_info ) => {
+
+  if ( !product_info || !product_info.length === 0 ) {
     const err = new Error('CART_PRODUCT_IS_NOT_VALID');
     err.statusCode = 400;
     throw err;
   }
+  
+  if ( Array.isArray(product_info) ) {
+    for(let i=0; i<product_info.length; i++) {
+      const { product_id } = product_info[i];
 
-  await cartDao.deleteProductInCartList( user_id, product_id );
+      const cartListCheck = await cartDao.cartListCheck( user_id, product_id );
+  
+      if ( !cartListCheck || cartListCheck.length === 0 ) {
+        const err = new Error('CART_PRODUCT_IS_NOT_VALID');
+        err.statusCode = 400;
+        throw err;
+      }
+
+      await cartDao.deleteProductInCartList( user_id, product_id );
+    }
+  } else {
+    const { product_id } = product_info;
+
+    const cartListCheck = await cartDao.cartListCheck( user_id, product_id );
+  
+    if ( !cartListCheck || cartListCheck.length === 0 ) {
+      const err = new Error('CART_PRODUCT_IS_NOT_VALID');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    await orderDao.orderItemAdd( product_id, product_price, product_quantity, order_id );
+  }
 };
 
 module.exports = { 

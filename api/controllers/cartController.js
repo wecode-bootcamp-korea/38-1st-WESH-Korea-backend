@@ -31,16 +31,16 @@ const addProductInCartList = catchAsync(async (req, res) => {
 });
 
 const deleteProductInCartList = catchAsync(async (req, res) => {
-  const { product_id } = req.body;
+  const { product_info } = req.body;
   const user_id = req.user.id;
 
-  if ( !product_id ) {
+  if ( !product_info || product_info.length === 0 ) {
     const err = new Error("KEY_ERROR");
     err.statusCode = 400;
     throw err;
   }
 
-  await cartService.deleteProductInCartList( user_id, product_id );
+  await cartService.deleteProductInCartList( user_id, product_info );
 
   res.status(200).json({ "data" : "deleteProductInCartList" });
 });
