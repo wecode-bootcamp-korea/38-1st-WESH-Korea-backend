@@ -2,54 +2,56 @@ const cartService = require("../services/cartService");
 const { catchAsync } = require("../utils/error");
 
 const getAllCartList = catchAsync(async (req, res) => {
-  const user_id = req.user.id;
+  const userId = req.user.id;
 
-  if ( !user_id ) {
+  if ( !userId ) {
     const err = new Error("KEY_ERROR");
     err.statusCode = 400;
     throw err;
   }
 
-  const userCartList = await cartService.getAllCartList( user_id );
+  const userCartList = await cartService.getAllCartList( userId );
 
   res.status(200).json({ "data" : userCartList });
 });
 
 const addProductInCartList = catchAsync(async (req, res) => {
-  const { product_id, quantity } = req.body;
-  const user_id = req.user.id;
+  const { quantity } = req.body;
+  const productId = req.body.product_id;
+  const userId = req.user.id;
 
-  if ( !product_id || !quantity ) {
+  if ( !productId || !quantity ) {
     const err = new Error("KEY_ERROR");
     err.statusCode = 400;
     throw err;
   }
 
-  await cartService.addProductInCartList( user_id, product_id, quantity );
+  await cartService.addProductInCartList( userId, productId, quantity );
 
   res.status(201).json({ "data" : "addProductInCartList" });
 });
 
 const deleteProductInCartList = catchAsync(async (req, res) => {
-  const { product_info } = req.body;
-  const user_id = req.user.id;
+  const productInfo = req.body.product_info;
+  const userId = req.user.id;
 
-  if ( !product_info || product_info.length === 0 ) {
+  if ( !productInfo || productInfo.length === 0 ) {
     const err = new Error("KEY_ERROR");
     err.statusCode = 400;
     throw err;
   }
 
-  await cartService.deleteProductInCartList( user_id, product_info );
+  await cartService.deleteProductInCartList( userId, productInfo );
 
   res.status(200).json({ "data" : "deleteProductInCartList" });
 });
 
 const updateOptionInCartList = catchAsync(async (req, res) => {
-  const { product_id, quantity } = req.body;
-  const user_id = req.user.id;
+  const { quantity } = req.body;
+  const productId = req.body.product_id;
+  const userId = req.user.id;
   
-  if ( !product_id || !quantity ) {
+  if ( !productId || !quantity ) {
     const err = new Error("KEY_ERROR");
     err.statusCode = 400;
     throw err;
@@ -63,7 +65,7 @@ const updateOptionInCartList = catchAsync(async (req, res) => {
   
   const NumberQuantity = +quantity;
 
-  await cartService.updateOptionInCartList( user_id, product_id, NumberQuantity );
+  await cartService.updateOptionInCartList( userId, productId, NumberQuantity );
 
   res.status(200).json({ "data" : "updateOptionInCartList" });
 });

@@ -57,13 +57,13 @@ const cartListCheck = async ( user_id, product_id ) => {
 			quantity,
 			price,
 			thumbnail,
-      user_id
+			user_id
 		FROM carts
-    INNER JOIN products
-    ON carts.product_id = products.id
+		INNER JOIN products
+		ON carts.product_id = products.id
 		WHERE user_id = ?
-    AND product_id = ?;`,
-    [ user_id, product_id ]
+		AND product_id = ?;`,
+		[ user_id, product_id ]
 	);
 }
 
