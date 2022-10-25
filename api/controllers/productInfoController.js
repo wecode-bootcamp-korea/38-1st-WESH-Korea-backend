@@ -1,10 +1,10 @@
-const mainService = require('../services/mainService');
+const productInfoService = require('../services/productInfoService');
 
-const mainDetailProducts = async (req, res) => {
+const getDetailProducts = async (req, res) => {
 
     const {limit, offset} = req.query;
     try{
-        const result = await mainService.mainDetailProducts(limit, offset);
+        const result = await productInfoService.getDetailProducts(limit, offset);
         res.status(201).json({data: result})
     }
     catch(err){
@@ -14,5 +14,5 @@ const mainDetailProducts = async (req, res) => {
 };
 
 module.exports = {
-    mainDetailProducts
+    getDetailProducts
 }

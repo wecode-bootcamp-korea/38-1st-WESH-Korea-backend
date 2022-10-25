@@ -1,6 +1,6 @@
 const {appDataSource} = require('./appDataSource')
 
-const mainDetailProducts = async (limit, offset) => {
+const getDetailProducts = async (limit, offset) => {
     try{
         const eventImages = await appDataSource.query(
             `SELECT
@@ -35,5 +35,5 @@ const mainDetailProducts = async (limit, offset) => {
 }
 
 module.exports = {
-    mainDetailProducts
+    getDetailProducts
 }
