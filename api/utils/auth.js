@@ -22,4 +22,4 @@ const loginRequired = async (req, res, next) => {
   next();
 }
 
-module.exports = loginRequired ;
+module.exports ={ loginRequired };

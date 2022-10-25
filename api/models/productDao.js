@@ -1,7 +1,7 @@
 const { appDataSource } = require("./appDataSource");
 
 const getCategoryId = async (categoryName) => {
-  const cateId = await appDataSource.query(`   
+  const categoryId = await appDataSource.query(`   
     SELECT 
       id
     FROM sub_categories
@@ -9,12 +9,12 @@ const getCategoryId = async (categoryName) => {
     `,
     [categoryName]
   );
-  return cateId[0].id;
+  return categoryId[0].id;
 };
 
-const getProductList = async (cateId, limit, offset, order) => {
+const getProductList = async (categoryId, limit, offset, order) => {
   const input = [limit, offset];
-  let query = !cateId ? `
+  let query = !categoryId ? `
     SELECT 
       p.id, 
       p.name AS title, 
@@ -43,15 +43,15 @@ const getProductList = async (cateId, limit, offset, order) => {
     LIMIT ? OFFSET ?;
     `;
 
-  if (cateId) input.unshift(cateId);
+  if (categoryId) input.unshift(categoryId);
 
   let sol = await appDataSource.query(query, input);
   return sol;
 };
 
-const getProductListByReview = async (cateId, limit, offset) => {
+const getProductListByReview = async (categoryId, limit, offset) => {
   const input = [limit, offset];
-  let query = !cateId ? `
+  let query = !categoryId ? `
     SELECT 
     	p.id, 
     	p.name AS title, 
@@ -82,14 +82,14 @@ const getProductListByReview = async (cateId, limit, offset) => {
     ORDER BY COUNT(r.product_id) DESC
     LIMIT ? OFFSET ? ;`;
 
-  if (cateId) input.unshift(cateId);
+  if (categoryId) input.unshift(categoryId);
 
   return appDataSource.query(query, input);
 };
 
-const getProductListByHowManySelled = async (cateId, limit, offset) => {
+const getProductListByHowManySelled = async (categoryId, limit, offset) => {
   const input = [limit, offset];
-  let query = !cateId ? `
+  let query = !categoryId ? `
     SELECT 
       p.id,
       p.name AS title, 
@@ -119,7 +119,7 @@ const getProductListByHowManySelled = async (cateId, limit, offset) => {
     ORDER BY COUNT(up.product_id) DESC
     LIMIT ? OFFSET ? ;`;
 
-  if (cateId) input.unshift(cateId);
+  if (categoryId) input.unshift(categoryId);
 
   return appDataSource.query(query, input);
 };
