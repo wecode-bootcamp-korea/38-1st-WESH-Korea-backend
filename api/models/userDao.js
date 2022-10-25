@@ -42,6 +42,27 @@ const getUserById = async (id) => {
   )
   return result[0]
 }
+
+const getPointByUserId = async (id) => {
+  const result = await appDataSource.query(
+    `SELECT 
+      id,
+      point
+    FROM users
+    WHERE id=?
+    `, [id]
+  )
+  return result[0]
+}
+
+const updatePoint = async (id, point) => {
+  await appDataSource.query(
+    `UPDATE users
+    SET point=?
+    WHERE id=?
+    `, [point, id]
+  )
+}
   
 const getUserDetail = async (userId) => {
   const result = await appDataSource.query(
@@ -70,5 +91,7 @@ module.exports = {
   createUser,
   getUserByEmail,
   getUserById,
-  getUserDetail
+  getUserDetail,
+  getPointByUserId,
+  updatePoint
 }
