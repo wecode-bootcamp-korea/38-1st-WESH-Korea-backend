@@ -3,7 +3,7 @@ const userService  = require('../services/userService')
 
 const loginRequired = async (req, res, next) => {
 
-    const accessToken = req.headers.authorization
+    const accessToken = req.headers.authorization;
 	if (!accessToken) {
 		const error = new Error('NEED_ACCESS_TOKEN')
 		return res.status(401).json({message: error.message})
