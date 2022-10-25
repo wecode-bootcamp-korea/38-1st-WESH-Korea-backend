@@ -50,14 +50,15 @@ const getMyPage = async (userId) => {
       u.id, 
       name AS username, 
       email AS username, 
-      phone_number, 
+      phone_number AS userphone, 
       point,
-      os.id,
-      COUNT(order_status_id) 
+      os.id AS orderStatusId,
+      os.status_description AS orderStatus,
+      COUNT(order_status_id) AS countByOrder 
     FROM users u 
     LEFT JOIN orders o ON u.id = o.user_id 
     JOIN order_statuses os ON o.order_status_id=os.id 
-    WHERE u.id = 1
+    WHERE u.id = ?
     GROUP BY order_status_id;
   `,
     [userId]
