@@ -37,17 +37,15 @@ const putLike = async (userId, productId) => {
 const getUserLikes = async (userId) => {
   const result = await appDataSource.query(`
     SELECT 
-      JSON_ARRAYAGG(
-        JSON_OBJECT(
-          "productId", p.id,
-          "productName", p.name,
-          "price", p.price
-        )
-      ) AS productInfo
+      p.id,
+      thumbnail,
+      p.name,
+      p.price,
+      sc.name
     FROM likes lk
     JOIN products p on p.id = lk.product_id
     JOIN sub_categories sc ON sc.id = p.sub_category_id
-    WHERE lk.user_id = ?;
+    WHERE lk.user_id=?;
     `, [userId]
   );
 
