@@ -1,7 +1,7 @@
 const likeService = require("../services/likeService");
 
 const addLike = async (req, res) => {
-  const { user } = req.body;
+  const { user } = req.user;
   const { productId } = req.body;
 
   try {
@@ -19,7 +19,7 @@ const addLike = async (req, res) => {
 };
 
 const deleteLike = async (req, res) => {
-  const { user } = req.body;
+  const { user } = req.user;
   const { productId } = req.body;
 
   try {
@@ -37,7 +37,7 @@ const deleteLike = async (req, res) => {
 };
 
 const getUserLikes = async (req, res) => {
-    const { user } = req.body;
+    const { user } = req.user;
     console.log(user);
   try {
     const data = await likeService.getUserLikes(user);
