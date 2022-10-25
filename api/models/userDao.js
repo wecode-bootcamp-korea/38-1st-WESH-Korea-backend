@@ -1,4 +1,4 @@
-const { appDataSource } = require("./appDataSource");
+const { appDataSource } = require('./appDataSource');
 
 const createUser = async (name, email, password, phone_number) => {
   const DEFAULT_POINT = 500000;
