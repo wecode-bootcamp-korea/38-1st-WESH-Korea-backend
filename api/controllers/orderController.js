@@ -1,23 +1,38 @@
 const orderService = require("../services/orderService");
+const { catchAsync } = require("../utils/error");
 
-const orderAdd = async (req, res) => {
-  const user_id = req.user.id;
-  const { product_info, total_price } = req.body;
+const addNewOrder = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const productInfo = req.body.product_info;
+  const totalPrice = req.body.total_price
 
-  try {
-    if ( !product_info, !total_price ) {
-      res.status(400).json({ "message" : "KEY_ERROR" });
-    }
-
-    await orderService.orderAdd( user_id, product_info, total_price );
-
-    res.status(200).json({ "data" : "orderComplete" });
-  } catch (err) {
-    console.log(err);
-    res.status(err.statusCode || 500).json({ "message" : err.message });
+  if ( !productInfo, !totalPrice ) {
+    const err = new Error("KEY_ERROR");
+    err.statusCode = 400;
+    throw err;
   }
-};
+
+  await orderService.addNewOrder( userId, productInfo, totalPrice );
+
+  res.status(200).json({ "data" : "orderComplete" });
+});
+
+const completeOrderByUser = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const orderId = req.body.order_id;
+
+  if ( !orderId ) {
+    const err = new Error("KEY_ERROR");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  await orderService.completeOrderByUser( userId, orderId );
+
+  res.status(200).json({ "data" : "completeOrderByUser" })
+});
 
 module.exports = { 
-  orderAdd
+  addNewOrder,
+  completeOrderByUser
 };

@@ -2,67 +2,91 @@ const orderDao = require("../models/orderDao");
 // const cartDao = require("../models/cartDao");
 // const userDao = require("../models/userDao");
 
-const orderAdd = async ( user_id, product_info, total_price ) => {
+const addNewOrder = async ( userId, productInfo, totalPrice ) => {
+  const QUANTITY_LOWER_LIMIT = 1;
+  const QUANTITY_UPPER_LIMIT = 20;
 
-  if ( !product_info || !product_info.length === 0 ) {
-    const err = new Error('ORDER_PRODUCT_IS_NOT_VALID');
-    err.statusCode = 400;
-    throw err;
-  }
-
-  const order_id = await orderDao.orderAdd( user_id );
+  const orderId = await orderDao.addNewOrder( userId );
   
-  if ( Array.isArray(product_info) ) {
-    for(let i=0; i<product_info.length; i++) {
-      const { product_id, product_price, product_quantity } = product_info[i];
+  if ( Array.isArray(productInfo) ) {
 
-      if ( isNaN(product_quantity) ) {
+    if ( !productInfo.length === 0 ) {
+      const err = new Error('ORDER_PRODUCT_IS_NOT_VALID');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    for(let i=0; i<productInfo.length; i++) {
+      const productId = productInfo[i].product_id;
+      const productQuantity = productInfo[i].product_quantity;
+
+      if ( isNaN(productQuantity) ) {
         const err = new Error('QUANTITY_IS_NOT_NUMBER');
         err.statusCode = 400;
         throw err;
       }
 
-      if ( product_quantity<0 || product_quantity>20 ) {
+      if ( productQuantity<QUANTITY_LOWER_LIMIT || productQuantity>QUANTITY_UPPER_LIMIT ) {
         const err = new Error('QUANTITY_IS_NOT_VALID');
         err.statusCode = 400;
         throw err;
       }
 
-      await orderDao.orderItemAdd( product_id, product_price, product_quantity, order_id );
-      // await cartDao.cartDelete( user_id, product_id );
+      await orderDao.addOrderItem( productId, totalPrice, productQuantity, orderId );
+      // await cartDao.cartDelete( userId, productId );
     }
   } else {
-    const { product_id, product_price, product_quantity } = product_info;
-    // const cartCheck = await cartDao.cartListCheck( user_id, product_id );
+    const { productId, totalPrice, productQuantity } = productInfo;
+    // const cartCheck = await cartDao.cartListCheck( userId, productId );
 
-    if ( isNaN(product_quantity) ) {
+    if ( isNaN(productQuantity) ) {
       const err = new Error('QUANTITY_IS_NOT_NUMBER');
       err.statusCode = 400;
       throw err;
     }
 
-    if ( product_quantity<0 || product_quantity>20 ) {
+    if ( productQuantity<QUANTITY_LOWER_LIMIT || productQuantity>QUANTITY_UPPER_LIMIT ) {
       const err = new Error('QUANTITY_IS_NOT_VALID');
       err.statusCode = 400;
       throw err;
     }
 
-    await orderDao.orderItemAdd( product_id, product_price, product_quantity, order_id );
+    await orderDao.addOrderItem( productId, totalPrice, productQuantity, orderId );
   }
 
-  // const user_point = await userDao.getPointById( user_id );
+  // const userPoint = await userDao.getPointByUserId( userId );
 
-  // if ( user_point < total_price ) {
+  // if ( userPoint < totalPrice ) {
   //   const err = new Error('POINT_IS_NOT_ENOUGH');
   //   err.statusCode = 400;
   //   throw err;
   // }
 
-  // const update_point = user_point - total_price;
+  // const changePoint = userPoint - totalPrice;
 
-  // await userDao.updatePoint( user_id, update_point );
+  // await userDao.updatePoint( userId, changePoint );
 };
 
+const completeOrderByUser = async ( userId, orderId ) => {
+  const orderCheck = await orderCheckByUserId( userId, orderId );
+
+  if ( !orderCheck || !orderCheck.length === 0 ) {
+    const err = new Error('NOT_OWNER_OF_ORDER');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const orderItem = await getItemByOrder( orderId );
+
+  orderItem.forEach( async (orderItem) => {
+    const productId = orderItem.product_id;
+
+    await addItemUserProduct( userId, productId );
+  });
+
+}
+
 module.exports = { 
-  orderAdd
+  addNewOrder,
+  completeOrderByUser
 };
