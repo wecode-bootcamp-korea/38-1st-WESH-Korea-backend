@@ -4,9 +4,9 @@ const { catchAsync } = require("../utils/error");
 const addNewOrder = catchAsync(async (req, res) => {
   const userId = req.user.id;
   const productInfo = req.body.product_info;
-  const totalPrice = req.body.total_price
+  const totalPrice = req.body.total_price;
 
-  if ( !productInfo, !totalPrice ) {
+  if ( !productInfo || !totalPrice ) {
     const err = new Error("KEY_ERROR");
     err.statusCode = 400;
     throw err;
@@ -20,14 +20,15 @@ const addNewOrder = catchAsync(async (req, res) => {
 const completeOrderByUser = catchAsync(async (req, res) => {
   const userId = req.user.id;
   const orderId = req.body.order_id;
+  const totalPrice = req.body.total_price;
 
-  if ( !orderId ) {
+  if ( !orderId || !totalPrice ) {
     const err = new Error("KEY_ERROR");
     err.statusCode = 400;
     throw err;
   }
 
-  await orderService.completeOrderByUser( userId, orderId );
+  await orderService.completeOrderByUser( userId, orderId, totalPrice );
 
   res.status(200).json({ "data" : "completeOrderByUser" })
 });
