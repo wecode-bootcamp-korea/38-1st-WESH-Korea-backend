@@ -6,7 +6,7 @@ const productInfoRouter = require('./productInfoRouter');
 const cartRouter = require('./cartRoute');
 
 router.use('/user', userRouter);
-router.use('/products_events', productInfoRouter);
+router.use('/products-events', productInfoRouter);
 router.use('/cart', cartRouter.router);
 
 module.exports = router;
