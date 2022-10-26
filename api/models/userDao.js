@@ -65,8 +65,7 @@ const updatePoint = async (id, point) => {
 }
   
 const getUserDetail = async (userId) => {
-  const result = await appDataSource.query(
-    `
+  const result = await appDataSource.query(`
     SELECT 
       u.id, 
       name AS username, 

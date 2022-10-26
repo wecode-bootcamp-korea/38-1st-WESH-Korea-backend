@@ -25,16 +25,13 @@ const signIn = async (req, res) => {
     }
 }
 
-const getUserDetail = async (req, res) =>{
-    const {user} = req.user;
+const getUserDetail = catchAsync(async (req, res) =>{
+    const { user } = req.user;
 
-    try{
-        const data = await userService.getUserDetail(user);
-        res.status(201).json({data : data});
-    } catch (error) {
-        res.status(error.statusCode).json({message : error.message})
-    }
-}
+    const data = await userService.getUserDetail(user);
+    res.status(201).json({data : data});
+    
+})
 
 module.exports = {
     signUp,
