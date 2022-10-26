@@ -56,7 +56,10 @@ const getItemByOrder = async ( orderId ) => {
 
 const orderCheckByUserId = async ( userId, orderId ) => {
   const orderStatusId = await appDataSource.query(`
-    SELECT order_status_id
+    SELECT 
+      id,
+      order_status_id,
+      user_id
     FROM orders
     WHERE id = ?
     AND user_id = ?;`,
@@ -80,10 +83,10 @@ const userProductCheckByUserId = async ( userId, productId ) => {
 
 const updateOptionInOrder = async ( userId, orderId, orderStatusId ) => {
   await appDataSource.query(`
-  UPDATE orders
-  SET order_status_id = ?
-  WHERE user_id = ?
-  AND id = ?`,
+    UPDATE orders
+    SET order_status_id = ?
+    WHERE user_id = ?
+    AND id = ?`,
     [ orderStatusId, userId, orderId ]
 	);
 }

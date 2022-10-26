@@ -100,7 +100,56 @@ const completeOrderByUser = async ( userId, orderId, totalPrice ) => {
   await userDao.updatePoint ( userId, changePoint );
 }
 
+const cancelOrderByUser = async ( userId, orderId, totalPrice ) => {
+  const COMPLETE_ORDER_STATUS_ID = 1;
+  const COMPLETE_SHIPPING_ORDER_STATUS_ID = 2;
+  const WITHDRAW_ORDER_STATUS_ID = 3;
+  const REFUND_ORDER_STATUS_ID = 4;
+  const SHIPPING_IN_PROGRESS_ORDER_STATUS_ID = 5;
+  const CONFIRMATION_ORDER_STATUS_ID = 6;
+  const SHIPPING_FEE = 2500;
+
+  const orderCheck = await orderDao.orderCheckByUserId( userId, orderId );
+  
+  if ( !orderCheck || orderCheck.length === 0 || orderCheck[0].id != orderId ) {
+    const err = new Error('NOT_OWNER_OF_ORDER');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if ( orderCheck[0].order_status_id === CONFIRMATION_ORDER_STATUS_ID ) {
+    const err = new Error('THIS_ORDER_IS_CONFIRMATION');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if ( orderCheck[0].order_status_id === COMPLETE_ORDER_STATUS_ID ) {
+    await orderDao.updateOptionInOrder( userId, orderId, WITHDRAW_ORDER_STATUS_ID);
+
+    const userPoint = await userDao.getPointByUserId( userId ); 
+    const changePoint = +userPoint.point + +totalPrice;
+    
+    await userDao.updatePoint ( userId, changePoint );
+  }
+
+  if ( orderCheck[0].order_status_id === COMPLETE_SHIPPING_ORDER_STATUS_ID || orderCheck[0].order_status_id === SHIPPING_IN_PROGRESS_ORDER_STATUS_ID ) {
+    await orderDao.updateOptionInOrder( userId, orderId, REFUND_ORDER_STATUS_ID);
+
+    const userPoint = await userDao.getPointByUserId( userId ); 
+    const changePoint = +userPoint.point + (totalPrice - (SHIPPING_FEE*2));
+
+    await userDao.updatePoint ( userId, changePoint );
+  }
+  
+  if ( orderCheck[0].order_status_id === WITHDRAW_ORDER_STATUS_ID || orderCheck[0].order_status_id === REFUND_ORDER_STATUS_ID ) {
+    const err = new Error('THIS_ORDER_HAVE_ALREADY_BEEN_REFUNDED');
+    err.statusCode = 400;
+    throw err;
+  }
+}
+
 module.exports = { 
   addNewOrder,
-  completeOrderByUser
+  completeOrderByUser,
+  cancelOrderByUser
 };

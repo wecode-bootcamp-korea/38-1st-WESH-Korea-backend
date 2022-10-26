@@ -33,7 +33,24 @@ const completeOrderByUser = catchAsync(async (req, res) => {
   res.status(200).json({ "data" : "completeOrderByUser" })
 });
 
+const cancelOrderByUser = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const orderId = req.body.order_id;
+  const totalPrice = req.body.total_price;
+
+  if ( !orderId || !totalPrice ) {
+    const err = new Error("KEY_ERROR");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  await orderService.cancelOrderByUser( userId, orderId, totalPrice );
+
+  res.status(200).json({ "data" : "cancelOrderByUser" })
+});
+
 module.exports = { 
   addNewOrder,
-  completeOrderByUser
+  completeOrderByUser,
+  cancelOrderByUser
 };
