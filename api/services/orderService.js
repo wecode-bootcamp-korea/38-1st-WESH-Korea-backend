@@ -78,6 +78,12 @@ const completeOrderByUser = async ( userId, orderId ) => {
 
   const orderItem = await getItemByOrder( orderId );
 
+  if ( !orderItem.length === 0 ) {
+    const err = new Error('PRODUCT_IS_EMPTY_IN_ORDER');
+    err.statusCode = 400;
+    throw err;
+  }
+
   orderItem.forEach( async (orderItem) => {
     const productId = orderItem.product_id;
 
