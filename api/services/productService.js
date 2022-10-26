@@ -1,8 +1,23 @@
 const productDao = require("../models/productDao");
+const reivewDao = require('../models/reviewDao');
+
+const productInfo = async (productId) => {
+    
+  const product = await productDao.productInfo(productId);
+  const reviews = await reivewDao.getReviews(productId);
+
+  if(!product.length){
+      const error =  new Error("PRODUCT_DOES_NOT_EXIST");
+      error.statusCode = 400;
+      throw error;
+  }
+
+  return [...product, ...reviews];
+}
 
 const getProductList = async (categoryName, limit, offset, sort) => {
   let categoryId = categoryName;
-  if (isNaN) {
+  if (isNaN(categoryId)) {
     categoryId =
       categoryName !== "all" ? await productDao.getCategoryId(categoryName) : 0;
   } else categoryId = Number(categoryName);
@@ -63,4 +78,5 @@ const getProductList = async (categoryName, limit, offset, sort) => {
 
 module.exports = {
   getProductList,
+  productInfo
 };

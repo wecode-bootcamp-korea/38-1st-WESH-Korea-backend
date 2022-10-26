@@ -21,9 +21,17 @@ const getProductList = catchAsync(async (req, res) => {
         message:"PRODUCTLIST_LOADING_SUCCESS", 
         data:data
     });
-
 });
 
+const productInfo = catchAsync (async (req, res) => {
+    
+    const productId = +req.params.id;
+    const result = await productService.productInfo(productId);
+    res.status(201).json({ detailPageData: result });
+    
+})
+
 module.exports = {
-    getProductList
+  getProductList,
+    productInfo
 }
