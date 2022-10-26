@@ -6,7 +6,7 @@ const getReviews = async (productId) => {
 
     if(!reviewList.length){
         const error = new Error("NO_REVIEW");
-		error.statusCode = 400;
+		error.statusCode = 404;
 		throw error;
     }
 
@@ -20,13 +20,13 @@ const createReview  = async (userId, productId, content, score) => {
     
     if(!checkProduct.length){
         const error = new Error("YOU_DIDN'T_BUY_THIS_ITEM");
-        error.statusCode = 400;
+        error.statusCode = 401;
 		throw error;
     }
 
     if(checkReview.length!==0){
         const error = new Error("YOU_ALREADY_WROTE_REVIEW");
-        error.statusCode = 400;
+        error.statusCode = 401;
 		throw error;
     }
     
@@ -39,7 +39,7 @@ const modifyReview = async (userId, productId, content, score) => {
 
     if(!checkProduct.length){
         const error = new Error("NO_PERMISSION");
-        error.statusCode = 400;
+        error.statusCode = 401;
 		throw error;
     }
 
@@ -53,13 +53,13 @@ const deleteReview = async (userId, productId) => {
 
     if(!checkProduct.length){
         const error = new Error("NO_PERMISSION");
-        error.statusCode = 400;
+        error.statusCode = 401;
 		throw error;
     }
 
     if(!checkReview.length){
         const error = new Error("NO_REVIEW");
-        error.statusCode = 400;
+        error.statusCode = 404;
 		throw error;
     }
 
