@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.get('/:categoryName', productController.getProductList);
 
-module.exports=router;
+module.exports = { router };

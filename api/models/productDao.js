@@ -21,14 +21,15 @@ const getProductList = async (categoryId, limit, offset, joinExpression, isCateg
     	p.id, 
     	p.name AS title, 
     	p.price, 
-    	thumbnail AS img, 
+    	thumbnail AS img,
+      sc.id AS categoryId,
     	sc.name AS category
     FROM products p 
     JOIN sub_categories sc ON p.sub_category_id = sc.id
     ${joinExpression}
     ${isCategory}
     ${group}
-    ${orderBy}
+    ORDER BY ${orderBy}
     ${limitOffset};
   `, input)
 }
