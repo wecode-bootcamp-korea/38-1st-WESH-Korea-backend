@@ -4,9 +4,9 @@ const {loginRequired} = require('../utils/auth');
 
 const router = express.Router();
 
-router.get('/:evTitleId', eventCommentController.getEvReview);
-router.post('/:evTitleId', loginRequired, eventCommentController.createEvReview);
-router.put('/:evTitleId', loginRequired, eventCommentController.modifyEvReview);
-router.delete('/:evTitleId', loginRequired, eventCommentController.deleteEvReview);
+router.get('/:eventTitleId', eventCommentController.getEventReview);
+router.post('/:eventTitleId', loginRequired, eventCommentController.createEventReview);
+router.put('/:eventTitleId', loginRequired, eventCommentController.modifyEventReview);
+router.delete('/:eventTitleId', loginRequired, eventCommentController.deleteEventReview);
 
 module.exports = router

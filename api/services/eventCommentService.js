@@ -1,55 +1,55 @@
 const eventCommentDao = require('../models/eventCommentDao');
 
-const getEvReview = async (evReviewId) => {
+const getEventReview = async (eventReviewId) => {
 
-    const evReview = await eventCommentDao.getEvReview(evReviewId);
-    return evReview;
+    const eventReview = await eventCommentDao.getEventReview(eventReviewId);
+    return eventReview;
 }
 
-const createEvReview = async (userId, content, evReviewId) => {
+const createEventReview = async (userId, content, eventReviewId) => {
 
-    const checkOwnReview = await eventCommentDao.checkOwnReview(userId, evReviewId);
+    const checkOwnReview = await eventCommentDao.checkOwnReview(userId, eventReviewId);
 
     if(checkOwnReview.length !== 0){
-        const error = new Error("YOU_ALREADY_WROTE_THIS_REVIEW");
+        const error = new Error("Duplicated Entry");
         error.statusCode = 400;
 		throw error;
     }
 
-    return await eventCommentDao.createEvReview(userId, content, evReviewId);
+    return await eventCommentDao.createEventReview(userId, content, eventReviewId);
     
 }
 
-const modifyEvReview = async (userId, content, evReviewId) => {
+const modifyEventReview = async (userId, content, eventReviewId) => {
 
-    const checkOwnReview = await eventCommentDao.checkOwnReview(userId, evReviewId);
+    const checkOwnReview = await eventCommentDao.checkOwnReview(userId, eventReviewId);
 
     if(!checkOwnReview.length){
-        const error = new Error("YOU_DIDN'T_WRITE_THIS_REVIEW");
+        const error = new Error("NO_PERMISSION");
         error.statusCode = 400;
 		throw error;
     }
 
-    return await eventCommentDao.modifyEvReview(userId, content, evReviewId);
+    return await eventCommentDao.modifyEventReview(userId, content, eventReviewId);
 }
 
-const deleteEvReview = async (userId, evReviewId) => {
+const deleteEventReview = async (userId, eventReviewId) => {
 
-    const checkOwnReview = await eventCommentDao.checkOwnReview(userId, evReviewId);
+    const checkOwnReview = await eventCommentDao.checkOwnReview(userId, eventReviewId);
    
     if(!checkOwnReview.length){
-        const error = new Error("THERE_IS_NO_REVIEW");
+        const error = new Error("NO_REVIEW");
         error.statusCode = 400;
 		throw error;
     }
 
-    return await eventCommentDao.deleteEvReview(userId, evReviewId);
+    return await eventCommentDao.deleteEventReview(userId, eventReviewId);
 }
 
 
 module.exports = {
-    getEvReview,
-    createEvReview,
-    modifyEvReview,
-    deleteEvReview
+    getEventReview,
+    createEventReview,
+    modifyEventReview,
+    deleteEventReview
 }

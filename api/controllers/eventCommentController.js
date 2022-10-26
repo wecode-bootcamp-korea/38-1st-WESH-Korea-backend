@@ -2,49 +2,49 @@ const eventCommentService = require('../services/eventCommentService');
 const jwt = require('jsonwebtoken');
 const { catchAsync } = require('../utils/error');
 
-const getEvReview = catchAsync (async (req, res) => {
+const getEventReview = catchAsync (async (req, res) => {
 
-    const evReviewId = +req.params.evTitleId;
-    const evReview = await eventCommentService.getEvReview(evReviewId);
-    res.status(200).json({"data": evReview});
+    const eventReviewId = +req.params.eventTitleId;
+    const eventReview = await eventCommentService.getEventReview(eventReviewId);
+    res.status(200).json({"data": eventReview});
     
 })
 
-const createEvReview = catchAsync (async (req, res) => {
+const createEventReview = catchAsync (async (req, res) => {
 
     const userId = req.user.id;
-    const evReviewId = +req.params.evTitleId;
+    const eventReviewId = +req.params.eventTitleId;
     const { content } = req.body;
 
-    await eventCommentService.createEvReview(userId, content, evReviewId);
+    await eventCommentService.createEventReview(userId, content, eventReviewId);
     res.status(201).json({"message": "EVENT_REVIEW_CREATED"}); 
    
 })
 
-const modifyEvReview = catchAsync (async (req, res) => {
+const modifyEventReview = catchAsync (async (req, res) => {
 
     const userId = req.user.id;
-    const evReviewId = +req.params.evTitleId;
+    const eventReviewId = +req.params.eventTitleId;
     const { content } = req.body;
 
-    await eventCommentService.modifyEvReview(userId, content, evReviewId);
+    await eventCommentService.modifyEventReview(userId, content, eventReviewId);
     res.status(200).json({"message": "EVENT_REVIEW_MODIFIED"}); 
    
 })
 
-const deleteEvReview = catchAsync (async (req, res) => {
+const deleteEventReview = catchAsync (async (req, res) => {
 
     const userId = req.user.id;
-    const evReviewId = +req.params.evTitleId; 
+    const eventReviewId = +req.params.eventTitleId; 
 
-    await eventCommentService.deleteEvReview(userId, evReviewId);
+    await eventCommentService.deleteEventReview(userId, eventReviewId);
     res.status(200).json({"message": "EVENT_REVIEW_DELETED"}); 
     
 })
 
 module.exports = {
-    getEvReview,
-    createEvReview,
-    modifyEvReview,
-    deleteEvReview
+    getEventReview,
+    createEventReview,
+    modifyEventReview,
+    deleteEventReview
 }

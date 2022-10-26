@@ -1,17 +1,17 @@
 const { appDataSource } = require('./appDataSource');
 
-const checkOwnReview = async (userId, evReviewId) => {
+const checkOwnReview = async (userId, eventReviewId) => {
     return await appDataSource.query(
         `SELECT
             user_id,
             event_id
         FROM event_comments
         WHERE user_id=? AND event_id=?    
-        `, [userId, evReviewId]
+        `, [userId, eventReviewId]
     )
 }
 
-const getEvReview = async (evReviewId) => {
+const getEventReview = async (eventReviewId) => {
     return await appDataSource.query(
         `SELECT 
             ec.content AS event_comment,
@@ -24,44 +24,44 @@ const getEvReview = async (evReviewId) => {
         ON ec.event_id = e.id
         INNER JOIN users u
         ON ec.user_id = u.id
-        WHERE ec.event_id = ${evReviewId}
+        WHERE ec.event_id = ${eventReviewId}
     
         `
     );
 }
 
-const createEvReview = async (userId, content, evReviewId) => {
+const createEventReview = async (userId, content, eventReviewId) => {
     return await appDataSource.query(
         `INSERT INTO event_comments(
             user_id,
             content,
             event_id
         ) VALUES (?, ?, ?) 
-        `, [userId, content, evReviewId]
+        `, [userId, content, eventReviewId]
     );
 }
 
-const modifyEvReview = async (userId, content, evReviewId) => {
+const modifyEventReview = async (userId, content, eventReviewId) => {
     return await appDataSource.query(
         `UPDATE event_comments
         SET content=?
         WHERE user_id=? AND event_id=?
-        `, [content, userId, evReviewId]
+        `, [content, userId, eventReviewId]
     )
 }
 
-const deleteEvReview = async (userId ,evReviewId) => {
+const deleteEventReview = async (userId ,eventReviewId) => {
     await appDataSource.query(
         `DELETE FROM event_comments
         WHERE user_id=? AND event_id=?
-        `, [userId, evReviewId]
+        `, [userId, eventReviewId]
     )
 }
 
 module.exports = {
-    getEvReview,
-    createEvReview,
+    getEventReview,
+    createEventReview,
     checkOwnReview,
-    modifyEvReview,
-    deleteEvReview
+    modifyEventReview,
+    deleteEventReview
 }

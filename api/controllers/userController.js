@@ -25,7 +25,16 @@ const signIn = async (req, res) => {
     }
 }
 
+const getUserDetail = catchAsync(async (req, res) =>{
+    const { user } = req.user;
+
+    const data = await userService.getUserDetail(user);
+    res.status(201).json({data : data});
+    
+})
+
 module.exports = {
     signUp,
-    signIn
+    signIn,
+    getUserDetail
 }
