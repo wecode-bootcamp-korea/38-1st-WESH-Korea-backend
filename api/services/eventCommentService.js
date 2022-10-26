@@ -26,7 +26,7 @@ const modifyEventReview = async (userId, content, eventReviewId) => {
 
     if(!checkOwnReview.length){
         const error = new Error("NO_PERMISSION");
-        error.statusCode = 400;
+        error.statusCode = 401;
 		throw error;
     }
 
