@@ -1,5 +1,5 @@
 const {appDataSource} = require('./appDataSource')
-// test : yunkuk
+
 const getProductsByFiltererCondition = async (tag, sort, limit, offset) => {
     const highPrice = await appDataSource.query(
         `SELECT
