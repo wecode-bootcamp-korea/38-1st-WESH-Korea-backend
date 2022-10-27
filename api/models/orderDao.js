@@ -1,4 +1,5 @@
 const { appDataSource } = require("./appDataSource");
+const { orderStatusEnum } = require("./enums");
 
 const addNewOrder = async ( user_id ) => {
 	const result = await appDataSource.query(`
@@ -8,7 +9,7 @@ const addNewOrder = async ( user_id ) => {
       order_status_id
     )
     VALUES ( ?, ? );`,
-    [ user_id, 1 ]
+    [ user_id, orderStatusEnum.COMPLETE_ORDER_STATUS_ID ]
 	);
 
   return result.insertId;
@@ -25,7 +26,7 @@ const addOrderItem = async ( product_id, product_price, product_quantity, order_
       order_item_status_id
     )
     VALUES ( ?, ?, ?, ?, ? );`,
-    [ product_id, product_price, product_quantity, order_id, 1 ]
+    [ product_id, product_price, product_quantity, order_id, orderStatusEnum.COMPLETE_ORDER_STATUS_ID ]
 	);
 
   return result.insertId;

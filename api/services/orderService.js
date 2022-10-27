@@ -1,11 +1,9 @@
 const orderDao = require("../models/orderDao");
 const cartDao = require("../models/cartDao");
 const userDao = require("../models/userDao");
+const { orderStatusEnum } = require("../models/enums");
 
 const addNewOrder = async ( userId, productInfo, totalPrice ) => {
-  const QUANTITY_LOWER_LIMIT = 1;
-  const QUANTITY_UPPER_LIMIT = 20;
-
   const orderId = await orderDao.addNewOrder( userId );
   
   if ( Array.isArray(productInfo) ) {
@@ -26,7 +24,7 @@ const addNewOrder = async ( userId, productInfo, totalPrice ) => {
         throw err;
       }
 
-      if ( productQuantity<QUANTITY_LOWER_LIMIT || productQuantity>QUANTITY_UPPER_LIMIT ) {
+      if ( productQuantity<orderStatusEnum.QUANTITY_LOWER_LIMIT || productQuantity>orderStatusEnum.QUANTITY_UPPER_LIMIT ) {
         const err = new Error('QUANTITY_IS_NOT_VALID');
         err.statusCode = 400;
         throw err;
@@ -45,7 +43,7 @@ const addNewOrder = async ( userId, productInfo, totalPrice ) => {
       throw err;
     }
 
-    if ( productQuantity<QUANTITY_LOWER_LIMIT || productQuantity>QUANTITY_UPPER_LIMIT ) {
+    if ( productQuantity<orderStatusEnum.QUANTITY_LOWER_LIMIT || productQuantity>orderStatusEnum.QUANTITY_UPPER_LIMIT ) {
       const err = new Error('QUANTITY_IS_NOT_VALID');
       err.statusCode = 400;
       throw err;
@@ -68,8 +66,6 @@ const addNewOrder = async ( userId, productInfo, totalPrice ) => {
 };
 
 const completeOrderByUser = async ( userId, orderId, totalPrice ) => {
-  const CONFIRMATION_ORDER_STATUS_ID = 6;
-
   const orderCheck = await orderDao.orderCheckByUserId( userId, orderId );
  
   if ( !orderCheck || orderCheck.length === 0 ) {
@@ -78,7 +74,7 @@ const completeOrderByUser = async ( userId, orderId, totalPrice ) => {
     throw err;
   }
 
-  await orderDao.updateOptionInOrder( userId, orderId, CONFIRMATION_ORDER_STATUS_ID);
+  await orderDao.updateOptionInOrder( userId, orderId,  orderStatusEnum.CONFIRMATION_ORDER_STATUS_ID);
 
   const orderItem = await orderDao.getItemByOrder( orderId );
 
@@ -101,14 +97,6 @@ const completeOrderByUser = async ( userId, orderId, totalPrice ) => {
 }
 
 const cancelOrderByUser = async ( userId, orderId, totalPrice ) => {
-  const COMPLETE_ORDER_STATUS_ID = 1;
-  const COMPLETE_SHIPPING_ORDER_STATUS_ID = 2;
-  const WITHDRAW_ORDER_STATUS_ID = 3;
-  const REFUND_ORDER_STATUS_ID = 4;
-  const SHIPPING_IN_PROGRESS_ORDER_STATUS_ID = 5;
-  const CONFIRMATION_ORDER_STATUS_ID = 6;
-  const SHIPPING_FEE = 2500;
-
   const orderCheck = await orderDao.orderCheckByUserId( userId, orderId );
   
   if ( !orderCheck || orderCheck.length === 0 || orderCheck[0].id != orderId ) {
@@ -117,14 +105,14 @@ const cancelOrderByUser = async ( userId, orderId, totalPrice ) => {
     throw err;
   }
 
-  if ( orderCheck[0].order_status_id === CONFIRMATION_ORDER_STATUS_ID ) {
+  if ( orderCheck[0].order_status_id ===  orderStatusEnum.CONFIRMATION_ORDER_STATUS_ID ) {
     const err = new Error('THIS_ORDER_IS_CONFIRMATION');
     err.statusCode = 400;
     throw err;
   }
 
-  if ( orderCheck[0].order_status_id === COMPLETE_ORDER_STATUS_ID ) {
-    await orderDao.updateOptionInOrder( userId, orderId, WITHDRAW_ORDER_STATUS_ID);
+  if ( orderCheck[0].order_status_id ===  orderStatusEnum.COMPLETE_ORDER_STATUS_ID ) {
+    await orderDao.updateOptionInOrder( userId, orderId, orderStatusEnum.WITHDRAW_ORDER_STATUS_ID);
 
     const userPoint = await userDao.getPointByUserId( userId ); 
     const changePoint = +userPoint.point + +totalPrice;
@@ -132,16 +120,16 @@ const cancelOrderByUser = async ( userId, orderId, totalPrice ) => {
     await userDao.updatePoint ( userId, changePoint );
   }
 
-  if ( orderCheck[0].order_status_id === COMPLETE_SHIPPING_ORDER_STATUS_ID || orderCheck[0].order_status_id === SHIPPING_IN_PROGRESS_ORDER_STATUS_ID ) {
-    await orderDao.updateOptionInOrder( userId, orderId, REFUND_ORDER_STATUS_ID);
+  if ( orderCheck[0].order_status_id ===  orderStatusEnum.COMPLETE_SHIPPING_ORDER_STATUS_ID || orderCheck[0].order_status_id === orderStatusEnum.SHIPPING_IN_PROGRESS_ORDER_STATUS_ID ) {
+    await orderDao.updateOptionInOrder( userId, orderId, orderStatusEnum.REFUND_ORDER_STATUS_ID);
 
     const userPoint = await userDao.getPointByUserId( userId ); 
-    const changePoint = +userPoint.point + (totalPrice - (SHIPPING_FEE*2));
+    const changePoint = +userPoint.point + (totalPrice - (orderStatusEnum.SHIPPING_FEE*2));
 
     await userDao.updatePoint ( userId, changePoint );
   }
   
-  if ( orderCheck[0].order_status_id === WITHDRAW_ORDER_STATUS_ID || orderCheck[0].order_status_id === REFUND_ORDER_STATUS_ID ) {
+  if ( orderCheck[0].order_status_id === orderStatusEnum.WITHDRAW_ORDER_STATUS_ID || orderCheck[0].order_status_id === orderStatusEnum.REFUND_ORDER_STATUS_ID ) {
     const err = new Error('THIS_ORDER_HAVE_ALREADY_BEEN_REFUNDED');
     err.statusCode = 400;
     throw err;
