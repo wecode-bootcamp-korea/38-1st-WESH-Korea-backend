@@ -4,6 +4,9 @@ const userDao = require("../models/userDao");
 const { orderStatusEnum } = require("../models/enums");
 
 const addNewOrder = async ( userId, productInfo, totalPrice ) => {
+  const QUANTITY_LOWER_LIMIT = 1;
+  const QUANTITY_UPPER_LIMIT = 20;
+
   const orderId = await orderDao.addNewOrder( userId );
   
   if ( Array.isArray(productInfo) ) {
@@ -24,7 +27,7 @@ const addNewOrder = async ( userId, productInfo, totalPrice ) => {
         throw err;
       }
 
-      if ( productQuantity<orderStatusEnum.QUANTITY_LOWER_LIMIT || productQuantity>orderStatusEnum.QUANTITY_UPPER_LIMIT ) {
+      if ( productQuantity<QUANTITY_LOWER_LIMIT || productQuantity>QUANTITY_UPPER_LIMIT ) {
         const err = new Error('QUANTITY_IS_NOT_VALID');
         err.statusCode = 400;
         throw err;
@@ -43,7 +46,7 @@ const addNewOrder = async ( userId, productInfo, totalPrice ) => {
       throw err;
     }
 
-    if ( productQuantity<orderStatusEnum.QUANTITY_LOWER_LIMIT || productQuantity>orderStatusEnum.QUANTITY_UPPER_LIMIT ) {
+    if ( productQuantity<QUANTITY_LOWER_LIMIT || productQuantity>QUANTITY_UPPER_LIMIT ) {
       const err = new Error('QUANTITY_IS_NOT_VALID');
       err.statusCode = 400;
       throw err;
@@ -97,6 +100,8 @@ const completeOrderByUser = async ( userId, orderId, totalPrice ) => {
 }
 
 const cancelOrderByUser = async ( userId, orderId, totalPrice ) => {
+  const SHIPPING_FEE = 2500;
+  
   const orderCheck = await orderDao.orderCheckByUserId( userId, orderId );
   
   if ( !orderCheck || orderCheck.length === 0 || orderCheck[0].id != orderId ) {
@@ -124,7 +129,7 @@ const cancelOrderByUser = async ( userId, orderId, totalPrice ) => {
     await orderDao.updateOptionInOrder( userId, orderId, orderStatusEnum.REFUND_ORDER_STATUS_ID);
 
     const userPoint = await userDao.getPointByUserId( userId ); 
-    const changePoint = +userPoint.point + (totalPrice - (orderStatusEnum.SHIPPING_FEE*2));
+    const changePoint = +userPoint.point + (totalPrice - (SHIPPING_FEE*2));
 
     await userDao.updatePoint ( userId, changePoint );
   }
