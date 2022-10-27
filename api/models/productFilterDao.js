@@ -1,6 +1,6 @@
 const {appDataSource} = require('./appDataSource')
 
-const priceFilter = async (tag, sort, limit, offset) => {
+const getProductsByFiltererCondition = async (tag, sort, limit, offset) => {
     const highPrice = await appDataSource.query(
         `SELECT
             p.id, 
@@ -14,15 +14,14 @@ const priceFilter = async (tag, sort, limit, offset) => {
         INNER JOIN tags t
         ON pt.tag_id = t.id
         WHERE t.name=?
-        ORDER BY price=?
+        ORDER BY price 
         LIMIT ? OFFSET ?
-        `, [tag, sort, +limit, +offset]
+        `, [tag, +limit, +offset]
     )
     return highPrice;
     
 }
 
-
 module.exports = {
-    priceFilter
+    getProductsByFiltererCondition
 }
