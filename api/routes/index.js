@@ -16,5 +16,4 @@ router.use('/products-events', productInfoRouter);
 router.use('/cart', cartRouter.router);
 router.use('/review', reviewRouter);
 
-
 module.exports = router;
