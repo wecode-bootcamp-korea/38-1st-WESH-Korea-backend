@@ -19,7 +19,6 @@ const createReview = catchAsync (async (req, res) => {
     await reviewService.createReview(userId, productId, content, score);
     res.status(201).json({"message": "REVIEW_CREATED"});
   
-    
 });
 
 const modifyReview = catchAsync (async (req, res) => {

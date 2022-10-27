@@ -11,7 +11,7 @@ const productRouter = require('./productRouter');
 
 router.use('/user', userRouter);
 router.use('/like', likeRouter);
-router.use('/product', productRouter);
+router.use('/product', productRouter.router);
 router.use('/products-events', productInfoRouter);
 router.use('/cart', cartRouter.router);
 router.use('/event', eventCommentRouter);
