@@ -19,7 +19,7 @@ const getUserById = async (id) => {
 const signUp = async (name, email, password, phone_number) => {
 	
 	if ( !name || !email || !password || !phone_number ){
-		const error = new Error('KEY_ERROR__MMO')
+		const error = new Error('KEY_ERROR')
 		error.statusCode = 404
 
 		throw error

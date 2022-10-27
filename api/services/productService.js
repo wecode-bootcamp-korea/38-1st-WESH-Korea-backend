@@ -61,16 +61,16 @@ const getProductList = async (categoryName, limit, offset, sort) => {
     limitOffset
   );
 
-  for (let i = 0; i < result.length; i++) {
+  for (let baseNumberOne = 0; baseNumberOne < result.length; baseNumberOne++) {
     const tagArr = [];
-    const productid = result[i].id;
+    const productid = result[baseNumberOne].id;
     const tags = await productDao.getTagsByProduct(productid);
 
-    for (let j = 0; j < tags.length; j++) {
-      tagArr.push(tags[j].name);
+    for (let baseNumberTwo = 0; baseNumberTwo < tags.length; baseNumberTwo++) {
+      tagArr.push(tags[baseNumberTwo].name);
     }
 
-    result[i].tag = tagArr;
+    result[baseNumberOne].tag = tagArr;
   }
 
   return result;
