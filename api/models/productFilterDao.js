@@ -14,7 +14,7 @@ const getProductsByFiltererCondition = async (tag, sort, limit, offset) => {
         INNER JOIN tags t
         ON pt.tag_id = t.id
         WHERE t.name=?
-        ORDER BY price 
+        ORDER BY price ${sort}
         LIMIT ? OFFSET ?
         `, [tag, +limit, +offset]
     )
