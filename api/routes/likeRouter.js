@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/click', authentication.loginRequired, likeController.addLike);
 router.post('/delete', authentication.loginRequired, likeController.deleteLike);
-router.post('/readall', authentication.loginRequired, likeController.getUserLikes);
+router.get('/readall', authentication.loginRequired, likeController.getUserLikes);
 
 
 module.exports = router;

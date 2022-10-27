@@ -23,7 +23,7 @@ const deleteLike = async (user, productId) => {
         error.statusCode = 400;
         throw error;
     }
-    return deleteLike(user, productId);
+    return likeDao.deleteLike(user, productId);
 }
 
 const getUserLikes = async (user) => {
