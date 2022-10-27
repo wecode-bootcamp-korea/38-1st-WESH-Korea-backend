@@ -14,9 +14,9 @@ const priceFilter = async (tag, sort, limit, offset) => {
         INNER JOIN tags t
         ON pt.tag_id = t.id
         WHERE t.name=?
-        ORDER BY price ${sort}
+        ORDER BY price=?
         LIMIT ? OFFSET ?
-        `, [tag, +limit, +offset]
+        `, [tag, sort, +limit, +offset]
     )
     return highPrice;
     
