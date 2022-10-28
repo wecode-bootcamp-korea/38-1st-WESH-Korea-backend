@@ -1,0 +1,12 @@
+const orderStatusEnum = Object.freeze({
+  COMPLETE_ORDER_STATUS_ID : 1,
+  COMPLETE_SHIPPING_ORDER_STATUS_ID : 2,
+  WITHDRAW_ORDER_STATUS_ID : 3,
+  REFUND_ORDER_STATUS_ID : 4,
+  SHIPPING_IN_PROGRESS_ORDER_STATUS_ID : 5,
+  CONFIRMATION_ORDER_STATUS_ID : 6
+});
+
+module.exports ={
+  orderStatusEnum
+}
