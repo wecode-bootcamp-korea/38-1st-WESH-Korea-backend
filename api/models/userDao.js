@@ -77,7 +77,7 @@ const getUserDetail = async (userId) => {
       COUNT(order_status_id) AS countByOrder 
     FROM users u 
     LEFT JOIN orders o ON u.id = o.user_id 
-    JOIN order_statuses os ON o.order_status_id=os.id 
+    LEFT JOIN order_statuses os ON o.order_status_id=os.id 
     WHERE u.id = ?
     GROUP BY order_status_id;
   `,

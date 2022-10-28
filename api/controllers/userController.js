@@ -18,7 +18,7 @@ const signIn = async (req, res) => {
 		res.status(200).json({ "data" : accessToken })
     }
     catch(error){
-        res.status(error.statusCode).json({ message: error.message });
+        res.status(error.statusCode||404).json({ message: error.message });
     }
 }
 
@@ -26,8 +26,7 @@ const getUserDetail = catchAsync(async (req, res) =>{
     const { user } = req.user;
 
     const data = await userService.getUserDetail(user);
-    res.status(201).json({data : data});
-    
+    res.status(200).json({data : data});
 })
 
 module.exports = {
