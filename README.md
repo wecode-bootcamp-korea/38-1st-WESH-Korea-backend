@@ -99,7 +99,7 @@ DATA BUILDING <br>
 #ERD</h2>
 <hr>
 <img src="https://user-images.githubusercontent.com/110619143/198530368-8ceb9332-623c-4523-b5bd-374daf492025.png">
-아래 페이지로 가시면 저희의 ERD를 더욱 자세하게 볼 수 
+아래 페이지로 가시면 저희의 ERD를 더욱 자세하게 볼 수 있습니다. <br>
 https://dbdiagram.io/d/634d0ba3f0018a1c5f195436
 <p>
 
