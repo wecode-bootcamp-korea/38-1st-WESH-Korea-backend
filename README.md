@@ -1,5 +1,6 @@
-# 38-1st-WESH-Korea-backend
-김성훈, 심채원, 정재욱
+<H1> # WESH</H1>
+
+<p>
 
 <img src="https://user-images.githubusercontent.com/93311025/198524734-b0e998eb-0cac-499f-b620-620c07683170.png"/>
 
@@ -8,7 +9,7 @@
 #프로젝트 소개</h2>
 <hr>
 <p>
-대한민국 인싸들의 배쓰용품, 러쉬를 클론 코딩 하였습니다. 개발은 초깅 세팅 부터 최종 발표까지 팀원들과 매번 소통을 하며 프로젝트를 진행하였고, 다양한 라이브러리와 API를 써보며 develop 목표로 진행되었습니다.<p>
+러쉬 코리아 클론 코딩, 다양한 향으로 피로를 풀어주는 현대인의 필수품으로 자리잡고 있음! WESH 팀도 현대인의 필수품처럼 어딜가나 멋있는 사람이 되기를 바라는 마음으로!!<p>
 <a href="https://www.youtube.com/watch?v=w0MkqnhkV_0&ab_channel=%EA%B7%9C%ED%9D%A0%EC%B5%9C">#Wesh 시연영상</a>
 
 <h2>
@@ -19,7 +20,7 @@
 <div align="center">
 <span>
 <img src="https://ca.slack-edge.com/TH0U6FBTN-U03RJQ96QLW-7ac928fc3041-512" width="150"/>
-<span>정관훈</span>
+<span></span>
 	</span>
 <span>
 <img src="https://ca.slack-edge.com/TH0U6FBTN-U03RNE8CEAZ-a966fdbd4437-512" width="150"/>
@@ -32,12 +33,6 @@
 </div>
 <h2>#BE</h2>
 <p>
-
-- 협업툴 : <img src=“https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white”/> <img src=“https://img.shields.io/badge/Slack-4A154B?style=flat&logo=Slack&logoColor=white”/> <img src=“https://img.shields.io/badge/Trello-0052CC?style=flat&logo=Trello&logoColor=white”/> <img src=“https://img.shields.io/badge/PostMan-FF6C37?style=flat&logo=PostMan&logoColor=white”/>
-5:47
-Back-End : <img src=“https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white”/> <img src=“https://img.shields.io/badge/Express-000000?style=flat&logo=Express&logoColor=white”/> <img src=“https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white”/> <img src=“https://img.shields.io/badge/EC2-FF9900?style=flat&logo=AmazonEC2&logoColor=white”/> <img src=“https://img.shields.io/badge/RDS-527FFF?style=flat&logo=AmazonRDS&logoColor=white”/> <img src=“https://img.shields.io/badge/S3-569A31?style=flat&logo=AmazonS3&logoColor=white”/>
-5:47
-common : <img src=“https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white”/> <img src=“https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white”/> <img src=“https://img.shields.io/badge/AWS-232F3E?style=flat&logo=AmazonAWS&logoColor=white”/> <img src=“https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=AmazonAWS&logoColor=white”/> <img src=“https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=white”/>
 
 <div align="center"><span>
 <img src="https://ca.slack-edge.com/TH0U6FBTN-U03RTREAL2Y-135ccfc8656d-192" width="150"/><span>정재욱</span>
@@ -75,14 +70,35 @@ common : <img src=“https://img.shields.io/badge/Git-F05032?style=flat&logo=Git
 </div>
 <p>
 <h2>
+
 #담당 업무</h2>
 <hr>
+<p> 
+정재욱 
+BACKEND PM
+MIGRATION FILE, 
+CARTS & ORDER API
 
-<p>
-<h2>
+김성훈
+INITIAL SETTING, 
+USER - SIGNUP, SIGNIN API
+REVIEW - CRUD API
+PRODUCT - DETAIL PAGE READ API, LIST BY TAGS API
+MAIN PAGE API
+EVENT READ API
+
+심채원
+PRODUCT LIST (BY CATEGORY & REORDERING) API
+MY PAGE API
+LIKE - CRD API
+DATA BUILDING
+
+<h2>a
 #ERD</h2>
 <hr>
 <img src="https://user-images.githubusercontent.com/110619143/198530368-8ceb9332-623c-4523-b5bd-374daf492025.png">
+아래 페이지로 가시면 저희의 ERD를 더욱 자세하게 볼 수 
+https://dbdiagram.io/d/634d0ba3f0018a1c5f195436
 <p>
 
 <h2>
