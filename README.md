@@ -20,7 +20,7 @@
 <div align="center">
 <span>
 <img src="https://ca.slack-edge.com/TH0U6FBTN-U03RJQ96QLW-7ac928fc3041-512" width="150"/>
-<span></span>
+<span>전관훈</span>
 	</span>
 <span>
 <img src="https://ca.slack-edge.com/TH0U6FBTN-U03RNE8CEAZ-a966fdbd4437-512" width="150"/>
@@ -30,6 +30,8 @@
 <img src="https://ca.slack-edge.com/TH0U6FBTN-U02JS0GA200-80f9f055b2ce-512" width="150"/>
 	<span>최규흠</span>
 	</span>
+	<p> 프론트 엔드의 코드를 구경하고 싶다면? <br>
+		https://github.com/wecode-bootcamp-korea/38-1st-WESH-Korea-frontend<br>
 </div>
 <h2>#BE</h2>
 <p>
