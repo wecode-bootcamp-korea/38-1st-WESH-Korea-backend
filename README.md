@@ -33,6 +33,12 @@
 <h2>#BE</h2>
 <p>
 
+- 협업툴 : <img src=“https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white”/> <img src=“https://img.shields.io/badge/Slack-4A154B?style=flat&logo=Slack&logoColor=white”/> <img src=“https://img.shields.io/badge/Trello-0052CC?style=flat&logo=Trello&logoColor=white”/> <img src=“https://img.shields.io/badge/PostMan-FF6C37?style=flat&logo=PostMan&logoColor=white”/>
+5:47
+Back-End : <img src=“https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white”/> <img src=“https://img.shields.io/badge/Express-000000?style=flat&logo=Express&logoColor=white”/> <img src=“https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white”/> <img src=“https://img.shields.io/badge/EC2-FF9900?style=flat&logo=AmazonEC2&logoColor=white”/> <img src=“https://img.shields.io/badge/RDS-527FFF?style=flat&logo=AmazonRDS&logoColor=white”/> <img src=“https://img.shields.io/badge/S3-569A31?style=flat&logo=AmazonS3&logoColor=white”/>
+5:47
+common : <img src=“https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white”/> <img src=“https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white”/> <img src=“https://img.shields.io/badge/AWS-232F3E?style=flat&logo=AmazonAWS&logoColor=white”/> <img src=“https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=AmazonAWS&logoColor=white”/> <img src=“https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=white”/>
+
 <div align="center"><span>
 <img src="https://ca.slack-edge.com/TH0U6FBTN-U03RTREAL2Y-135ccfc8656d-192" width="150"/><span>정재욱</span>
 	</span>
@@ -71,6 +77,7 @@
 <h2>
 #담당 업무</h2>
 <hr>
+
 <p>
 <h2>
 #ERD</h2>
